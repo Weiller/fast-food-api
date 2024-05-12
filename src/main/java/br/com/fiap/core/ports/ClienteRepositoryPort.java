@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ClienteRepositoryPort {
 
-    void salvar(Cliente cliente);
+    Cliente salvar(Cliente cliente);
 
     List<Cliente> getClientes(Long idCliente);
 }

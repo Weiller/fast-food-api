@@ -24,9 +24,7 @@ public class ClienteService implements ClienteServicePort {
     }
 
     @Override
-    public void salvar(Long idCliente) {
-        clienteServicePort.salvar(new Cliente(1L));
-
-        System.out.println("Salvando cliente");
+    public Cliente salvar(Cliente cliente) {
+        return clienteServicePort.salvar(cliente);
     }
 }

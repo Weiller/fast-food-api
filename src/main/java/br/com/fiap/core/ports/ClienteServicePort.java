@@ -9,6 +9,5 @@ public interface ClienteServicePort {
 
     Cliente getClienteById(Long idCliente);
 
-    void salvar(Long idCliente);
-
+    Cliente salvar(Cliente cliente);
 }

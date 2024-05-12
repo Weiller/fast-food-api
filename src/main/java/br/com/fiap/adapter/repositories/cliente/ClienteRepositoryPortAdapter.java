@@ -1,5 +1,6 @@
 package br.com.fiap.adapter.repositories.cliente;
 
+import br.com.fiap.adapter.controller.converter.ClienteConverter;
 import br.com.fiap.core.domain.entities.Cliente;
 import br.com.fiap.core.ports.ClienteRepositoryPort;
 import java.util.List;
@@ -15,8 +16,10 @@ public class ClienteRepositoryPortAdapter implements ClienteRepositoryPort {
     }
 
     @Override
-    public void salvar(Cliente cliente) {
-        clienteRepository.save(new ClienteEntity());
+    public Cliente salvar(Cliente cliente) {
+        clienteRepository.save(ClienteConverter.converterClienteToEntity(cliente));
+
+        return cliente;
     }
 
     @Override
