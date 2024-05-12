@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: fast-food-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fastfood
+    username: postgres
+    password: postgres
+
+  jpa:
+    database: Postgresql
+    show-sql: true
+    open-in-view: false
+  flyway:
+    schemas: fastfood
+    url: jdbc:postgresql://localhost:5432/fastfood
+    user: postgres
+    password: postgres
+
+cors:
+  url: http://localhost:3000
+
+
