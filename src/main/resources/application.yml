@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: ${PROFILE:default}
   application:
     name: fast-food-api
   datasource:
@@ -10,6 +12,8 @@ spring:
     database: Postgresql
     show-sql: true
     open-in-view: false
+    hibernate:
+      ddl-auto: create
   flyway:
     schemas: fastfood
     url: jdbc:postgresql://localhost:5432/fastfood

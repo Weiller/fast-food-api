@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: fast-food-api
+  datasource:
+    url: jdbc:postgresql://${RDS_HOSTNAME}:${RDS_PORT}/fastfood?currentSchema=fastfood
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
+
+  jpa:
+    database: Postgresql
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+  flyway:
+    schemas: fastfood
+    url: jdbc:postgresql://${RDS_HOSTNAME}:${RDS_PORT}/fastfood?currentSchema=fastfood
+    user: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
+
+cors:
+  url: http://localhost:3000
+
+
