@@ -1,10 +1,11 @@
 package br.com.fiap.core.service;
 
+import br.com.fiap.core.common.CpfValidator;
 import br.com.fiap.core.domain.entities.Cliente;
 import br.com.fiap.core.exceptions.BusinessException;
 import br.com.fiap.core.ports.ClienteRepositoryPort;
 import br.com.fiap.core.ports.ClienteServicePort;
-import java.util.Optional;
+import java.util.Objects;
 
 public class ClienteService implements ClienteServicePort {
 
@@ -21,21 +22,29 @@ public class ClienteService implements ClienteServicePort {
 
     @Override
     public Cliente salvar(Cliente cliente) {
-        preValidate(cliente);
+        preValidar(cliente);
         return clienteServicePort.salvar(cliente);
     }
 
-    private static void preValidate(Cliente cliente) {
-        if (cliente.nome() == null) {
+    private void preValidar(Cliente cliente) {
+        if (Objects.isNull(cliente.nome())) {
             throw new BusinessException("É necessário informar o nome do cliente");
         }
 
-        if (cliente.email() == null) {
+        if (Objects.isNull(cliente.email())) {
             throw new BusinessException("É necessário informar o email do cliente");
         }
 
-        if (cliente.cpf() == null) {
+        if (Objects.isNull(cliente.cpf())) {
             throw new BusinessException("É necessário informar o cpf do cliente");
         }
+
+        if(!CpfValidator.isValid(cliente.cpf())) {
+            throw new BusinessException("Cpf inválido");
+        }
+
+        clienteServicePort.getClienteByCpf(cliente.cpf()).ifPresent(c -> {
+            throw new BusinessException("Cliente já cadastrado");
+        });
     }
 }
