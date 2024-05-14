@@ -27,7 +27,7 @@ public class ClienteController {
         return clienteServicePort.getClientes(id);
     }
 
-    @PostMapping// Alteração de "/salvar" para "/
+    @PostMapping
     public Cliente salvar(@RequestBody CriarClienteCommand command) {
         return clienteServicePort.salvar(ClienteConverter.converterCommandToCliente(command));
     }

@@ -7,11 +7,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "CLIENTE", schema = "FASTFOOD")
 @SequenceGenerator(name = "SQ_CLIENTE", sequenceName = "FASTFOOD.SQ_CLIENTE", allocationSize = 1, initialValue = 1)
 public class ClienteEntity {
@@ -31,36 +39,5 @@ public class ClienteEntity {
     private String email;
 
     @Column(name = "DATA_INCLUSAO", nullable = false)
-    private LocalDate dataInclusao = LocalDate.now();
-
-    public ClienteEntity(String nome, String cpf, String email) {
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public LocalDate getDataInclusao() {
-        return dataInclusao;
-    }
-
+    private LocalDateTime dataInclusao = LocalDateTime.now();
 }
