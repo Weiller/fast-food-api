@@ -4,7 +4,7 @@ import br.com.fiap.core.domain.entities.Cliente;
 import br.com.fiap.core.exceptions.BusinessException;
 import br.com.fiap.core.ports.ClienteRepositoryPort;
 import br.com.fiap.core.ports.ClienteServicePort;
-import java.util.List;
+import java.util.Optional;
 
 public class ClienteService implements ClienteServicePort {
 
@@ -15,13 +15,8 @@ public class ClienteService implements ClienteServicePort {
     }
 
     @Override
-    public List<Cliente> getClientes(Long idCliente) {
-        return clienteServicePort.getClientes(idCliente);
-    }
-
-    @Override
-    public Cliente getClienteById(Long idCliente) {
-        return null;
+    public Cliente getClienteByCpf(String cpf) {
+        return clienteServicePort.getClienteByCpf(cpf).orElseThrow(() -> new BusinessException("Cliente não encontrado"));
     }
 
     @Override
@@ -31,15 +26,15 @@ public class ClienteService implements ClienteServicePort {
     }
 
     private static void preValidate(Cliente cliente) {
-        if(cliente.nome() == null) {
+        if (cliente.nome() == null) {
             throw new BusinessException("É necessário informar o nome do cliente");
         }
 
-        if(cliente.email() == null) {
+        if (cliente.email() == null) {
             throw new BusinessException("É necessário informar o email do cliente");
         }
 
-        if(cliente.cpf() == null) {
+        if (cliente.cpf() == null) {
             throw new BusinessException("É necessário informar o cpf do cliente");
         }
     }

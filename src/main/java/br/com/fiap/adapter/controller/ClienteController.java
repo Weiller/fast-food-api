@@ -22,9 +22,9 @@ public class ClienteController {
         this.clienteServicePort = clienteServicePort;
     }
 
-    @GetMapping
-    public List<Cliente> getClientes(@PathVariable("id") Long id) {
-        return clienteServicePort.getClientes(id);
+    @GetMapping("/{cpf}")
+    public Cliente getClienteByCpf(@PathVariable("cpf") String cpf) {
+        return clienteServicePort.getClienteByCpf(cpf);
     }
 
     @PostMapping

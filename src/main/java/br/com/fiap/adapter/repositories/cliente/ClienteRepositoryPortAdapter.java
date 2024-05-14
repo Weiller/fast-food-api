@@ -3,7 +3,7 @@ package br.com.fiap.adapter.repositories.cliente;
 import br.com.fiap.adapter.controller.converter.ClienteConverter;
 import br.com.fiap.core.domain.entities.Cliente;
 import br.com.fiap.core.ports.ClienteRepositoryPort;
-import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,11 +23,11 @@ public class ClienteRepositoryPortAdapter implements ClienteRepositoryPort {
     }
 
     @Override
-    public List<Cliente> getClientes(Long idCliente) {
-        ClienteEntity clienteEntity = clienteRepository.findById(idCliente)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    public Optional<Cliente> getClienteByCpf(String cpf) {
+        Optional<ClienteEntity> clienteEntity = clienteRepository.findByCpf(cpf);
 
-        return List.of();
+        return clienteEntity.map(ClienteConverter::converterEntityToCliente);
+
     }
 
 }

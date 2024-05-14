@@ -24,4 +24,13 @@ public class ClienteConverter {
                 .build();
     }
 
+    public static Cliente converterEntityToCliente(ClienteEntity cliente) {
+        return new Cliente.Builder()
+                .id(cliente.getId())
+                .nome(cliente.getNome())
+                .cpf(cliente.getCpf())
+                .email(cliente.getEmail())
+                .build();
+    }
+
 }

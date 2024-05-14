@@ -1,11 +1,11 @@
 package br.com.fiap.core.ports;
 
 import br.com.fiap.core.domain.entities.Cliente;
-import java.util.List;
+import java.util.Optional;
 
 public interface ClienteRepositoryPort {
 
     Cliente salvar(Cliente cliente);
 
-    List<Cliente> getClientes(Long idCliente);
+    Optional<Cliente> getClienteByCpf(String cpf);
 }
