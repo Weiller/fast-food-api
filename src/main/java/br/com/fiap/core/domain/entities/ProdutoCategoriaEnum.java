@@ -8,6 +8,10 @@ public enum ProdutoCategoriaEnum {
     S("Sobremesa");
     private String descricao;
 
+    public String getDescricao() {
+        return descricao;
+    }
+
     ProdutoCategoriaEnum(String descricao) {
         this.descricao = descricao;
     }

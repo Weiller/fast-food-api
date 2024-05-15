@@ -1,19 +1,19 @@
-package br.com.fiap.core.domain.entities;
+package br.com.fiap.core.dto;
 
 import java.math.BigDecimal;
 
-public record Produto(Long id,
-                      String nome,
-                      String descricao,
-                      BigDecimal valor,
-                      ProdutoCategoriaEnum categoria) {
+public record ProdutoDto(Long id,
+                         String nome,
+                         String descricao,
+                         BigDecimal valor,
+                         String descricaoCategoria) {
 
     public static class Builder {
         private Long id;
         private String nome;
         private String descricao;
         private BigDecimal valor;
-        private ProdutoCategoriaEnum categoria;
+        private String descricaoCategoria;
 
         public Builder id(Long id) {
             this.id = id;
@@ -35,18 +35,14 @@ public record Produto(Long id,
             return this;
         }
 
-        public Builder categoria(ProdutoCategoriaEnum categoria) {
-            this.categoria = categoria;
+        public Builder categoria(String descricaoCategoria) {
+            this.descricaoCategoria = descricaoCategoria;
             return this;
         }
 
-        public Produto build() {
-            return new Produto(id, nome, descricao, valor, categoria);
+        public ProdutoDto build() {
+            return new ProdutoDto(id, nome, descricao, valor, descricaoCategoria);
         }
-    }
-
-    public String getCategoria() {
-        return categoria.getDescricao();
     }
 
 }
