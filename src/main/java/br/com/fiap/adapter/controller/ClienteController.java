@@ -4,7 +4,11 @@ import br.com.fiap.adapter.controller.command.CriarClienteCommand;
 import br.com.fiap.adapter.controller.converter.ClienteConverter;
 import br.com.fiap.core.domain.entities.Cliente;
 import br.com.fiap.core.ports.ClienteServicePort;
-import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +26,23 @@ public class ClienteController {
         this.clienteServicePort = clienteServicePort;
     }
 
+    @Operation(summary = "Retornar um cliente pelo CPF")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente encontrado", content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Cliente.class)) }),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Cliente não encontrado", content = @Content) })
     @GetMapping("/{cpf}")
     public Cliente getClienteByCpf(@PathVariable("cpf") String cpf) {
         return clienteServicePort.getClienteByCpf(cpf);
     }
 
+    @Operation(summary = "Salvar um novo cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cliente cadastrado com sucesso", content = { @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Cliente.class)) }),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do cliente", content = @Content) })
     @PostMapping
     public Cliente salvar(@RequestBody CriarClienteCommand command) {
         return clienteServicePort.salvar(ClienteConverter.converterCommandToCliente(command));
