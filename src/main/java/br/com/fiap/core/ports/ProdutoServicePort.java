@@ -10,4 +10,8 @@ public interface ProdutoServicePort {
 
     List<ProdutoDto> getProdutosPorCategoria(String categoria);
 
+    Produto getProdutoById(Long id);
+
+    Produto excluir(Long id);
+
 }

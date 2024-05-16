@@ -8,4 +8,8 @@ public interface ProdutoRepositoryPort {
 
     Produto salvar(Produto produto);
     List<Produto> getProdutosPorCategoria(ProdutoCategoriaEnum categoria);
+
+    Produto getProdutoById(Long id);
+
+    Produto excluir(Produto produto);
 }

@@ -65,4 +65,19 @@ public class ProdutoService implements ProdutoServicePort {
         return ProdutoConverter.converterListaProdutoToProdutoDto(produtoList);
     }
 
+    @Override
+    public Produto getProdutoById(Long id) {
+        return produtoRepositoryPort.getProdutoById(id);
+    }
+
+    @Override
+    public Produto excluir(Long id) {
+        Produto produto = getProdutoById(id);
+
+        if(Objects.isNull(produto)) {
+            throw new BusinessException("Não foi possível excluir. Produto não encontrado.");
+        }
+        return produtoRepositoryPort.excluir(produto);
+    }
+
 }

@@ -33,4 +33,16 @@ public class ProdutoRepositoryPortAdapter implements ProdutoRepositoryPort {
 
         return List.of();
     }
+
+    @Override
+    public Produto getProdutoById(Long id) {
+        return produtoRepository.findById(id).map(ProdutoConverter::converterEntityToProduto).orElse(null);
+    }
+
+    @Override
+    public Produto excluir(Produto produto) {
+        produtoRepository.delete(produtoRepository.findById(produto.id()).get());
+
+        return produto;
+    }
 }
