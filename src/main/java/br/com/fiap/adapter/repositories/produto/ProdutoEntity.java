@@ -1,6 +1,6 @@
 package br.com.fiap.adapter.repositories.produto;
 
-import br.com.fiap.core.domain.entities.ProdutoCategoriaEnum;
+import br.com.fiap.core.domain.enums.ProdutoCategoriaEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

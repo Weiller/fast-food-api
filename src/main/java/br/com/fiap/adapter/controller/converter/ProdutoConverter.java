@@ -4,7 +4,7 @@ import br.com.fiap.adapter.controller.command.AlterarProdutoCommand;
 import br.com.fiap.adapter.controller.command.CriarProdutoCommand;
 import br.com.fiap.adapter.repositories.produto.ProdutoEntity;
 import br.com.fiap.core.domain.entities.Produto;
-import br.com.fiap.core.domain.entities.ProdutoCategoriaEnum;
+import br.com.fiap.core.domain.enums.ProdutoCategoriaEnum;
 import java.util.List;
 import java.util.stream.Collectors;
 

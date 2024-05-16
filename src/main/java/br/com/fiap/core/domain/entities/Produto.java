@@ -1,5 +1,7 @@
 package br.com.fiap.core.domain.entities;
 
+import br.com.fiap.core.domain.enums.ProdutoCategoriaEnum;
+
 import java.math.BigDecimal;
 
 public class Produto {

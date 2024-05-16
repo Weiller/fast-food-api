@@ -2,7 +2,7 @@ package br.com.fiap.adapter.repositories.produto;
 
 import br.com.fiap.adapter.controller.converter.ProdutoConverter;
 import br.com.fiap.core.domain.entities.Produto;
-import br.com.fiap.core.domain.entities.ProdutoCategoriaEnum;
+import br.com.fiap.core.domain.enums.ProdutoCategoriaEnum;
 import br.com.fiap.core.ports.ProdutoRepositoryPort;
 import java.util.List;
 import org.springframework.stereotype.Component;

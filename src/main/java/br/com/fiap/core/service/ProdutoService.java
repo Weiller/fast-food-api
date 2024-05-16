@@ -2,7 +2,7 @@ package br.com.fiap.core.service;
 
 import br.com.fiap.core.converter.ProdutoConverter;
 import br.com.fiap.core.domain.entities.Produto;
-import br.com.fiap.core.domain.entities.ProdutoCategoriaEnum;
+import br.com.fiap.core.domain.enums.ProdutoCategoriaEnum;
 import br.com.fiap.core.dto.ProdutoDto;
 import br.com.fiap.core.exceptions.BusinessException;
 import br.com.fiap.core.ports.ProdutoRepositoryPort;

@@ -1,4 +1,4 @@
-package br.com.fiap.core.domain.entities;
+package br.com.fiap.core.domain.enums;
 
 import java.util.Optional;
 
