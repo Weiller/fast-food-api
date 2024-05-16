@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface ProdutoRepositoryPort {
 
+    Produto salvar(Produto produto);
     List<Produto> getProdutosPorCategoria(ProdutoCategoriaEnum categoria);
 }

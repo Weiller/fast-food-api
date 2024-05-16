@@ -17,6 +17,13 @@ public class ProdutoRepositoryPortAdapter implements ProdutoRepositoryPort {
     }
 
     @Override
+    public Produto salvar(Produto produto) {
+        ProdutoEntity produtoEntity = produtoRepository.save(ProdutoConverter.converterProdutoToEntity(produto));
+
+        return ProdutoConverter.converterEntityToProduto(produtoEntity);
+    }
+
+    @Override
     public List<Produto> getProdutosPorCategoria(ProdutoCategoriaEnum categoria) {
         List<ProdutoEntity> produtosList = produtoRepository.findByCategoria(categoria);
 

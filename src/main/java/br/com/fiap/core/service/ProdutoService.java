@@ -7,7 +7,9 @@ import br.com.fiap.core.dto.ProdutoDto;
 import br.com.fiap.core.exceptions.BusinessException;
 import br.com.fiap.core.ports.ProdutoRepositoryPort;
 import br.com.fiap.core.ports.ProdutoServicePort;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class ProdutoService implements ProdutoServicePort {
@@ -16,6 +18,34 @@ public class ProdutoService implements ProdutoServicePort {
 
     public ProdutoService(ProdutoRepositoryPort produtoRepositoryPort) {
         this.produtoRepositoryPort = produtoRepositoryPort;
+    }
+
+    @Override
+    public Produto salvar(Produto produto) {
+        preValidar(produto);
+        return produtoRepositoryPort.salvar(produto);
+    }
+
+    private static void preValidar(Produto produto) {
+        if(Objects.isNull(produto.categoria())) {
+            throw new BusinessException("A categoria está vazia ou está sendo passado um tipo inválido.");
+        }
+
+        if(Objects.isNull(produto.valor())) {
+            throw new BusinessException("É obrigatório informar o valor do produto.");
+        }
+
+        if(produto.valor().compareTo(BigDecimal.ZERO) < 0) {
+            throw new BusinessException("O valor do produto deve ser maior que zero.");
+        }
+
+        if(Objects.isNull(produto.nome())) {
+            throw new BusinessException("É obrigatório informar o nome do produto.");
+        }
+
+        if(Objects.isNull(produto.descricao())) {
+            throw new BusinessException("É obrigatório informar a descrição do produto.");
+        }
     }
 
     @Override

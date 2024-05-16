@@ -17,9 +17,9 @@ public class ClienteRepositoryPortAdapter implements ClienteRepositoryPort {
 
     @Override
     public Cliente salvar(Cliente cliente) {
-        clienteRepository.save(ClienteConverter.converterClienteToEntity(cliente));
+        ClienteEntity clienteEntity = clienteRepository.save(ClienteConverter.converterClienteToEntity(cliente));
 
-        return cliente;
+        return ClienteConverter.converterEntityToCliente(clienteEntity);
     }
 
     @Override
