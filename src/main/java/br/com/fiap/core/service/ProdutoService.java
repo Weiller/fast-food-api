@@ -23,27 +23,47 @@ public class ProdutoService implements ProdutoServicePort {
     @Override
     public Produto salvar(Produto produto) {
         preValidar(produto);
+
+        if (produto.getId() != null) {
+            return alterar(produto);
+        } else {
+            return criar(produto);
+        }
+    }
+
+    private Produto criar(Produto produto) {
         return produtoRepositoryPort.salvar(produto);
     }
 
+    private Produto alterar(Produto produto) {
+        Produto produtoSalvo = getProdutoById(produto.getId());
+
+        if (Objects.isNull(produtoSalvo)) {
+            throw new BusinessException("Erro ao alterar, produto não encontrado no banco de dados.");
+        }
+
+        produtoSalvo.alterar(produto);
+        return produtoRepositoryPort.salvar(produtoSalvo);
+    }
+
     private static void preValidar(Produto produto) {
-        if(Objects.isNull(produto.categoria())) {
+        if(Objects.isNull(produto.getCategoria())) {
             throw new BusinessException("A categoria está vazia ou está sendo passado um tipo inválido.");
         }
 
-        if(Objects.isNull(produto.valor())) {
+        if(Objects.isNull(produto.getValor())) {
             throw new BusinessException("É obrigatório informar o valor do produto.");
         }
 
-        if(produto.valor().compareTo(BigDecimal.ZERO) < 0) {
+        if(produto.getValor().compareTo(BigDecimal.ZERO) < 0) {
             throw new BusinessException("O valor do produto deve ser maior que zero.");
         }
 
-        if(Objects.isNull(produto.nome())) {
+        if(Objects.isNull(produto.getNome())) {
             throw new BusinessException("É obrigatório informar o nome do produto.");
         }
 
-        if(Objects.isNull(produto.descricao())) {
+        if(Objects.isNull(produto.getDescricao())) {
             throw new BusinessException("É obrigatório informar a descrição do produto.");
         }
     }

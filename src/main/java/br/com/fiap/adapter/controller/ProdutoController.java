@@ -1,5 +1,6 @@
 package br.com.fiap.adapter.controller;
 
+import br.com.fiap.adapter.controller.command.AlterarProdutoCommand;
 import br.com.fiap.adapter.controller.command.CriarProdutoCommand;
 import br.com.fiap.adapter.controller.converter.ProdutoConverter;
 import br.com.fiap.core.domain.entities.Cliente;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +41,17 @@ public class ProdutoController {
     @PostMapping
     public Produto salvar(@RequestBody CriarProdutoCommand command) {
         return produtoServicePort.salvar(ProdutoConverter.converterCommandToProduto(command));
+    }
+
+    @Operation(summary = "Alterar um produto")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Produto alterado com sucesso", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Cliente.class))}),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Erro de validação na alteração do produto", content = @Content)})
+    @PutMapping
+    public Produto alterar(@RequestBody AlterarProdutoCommand command) {
+        return produtoServicePort.salvar(ProdutoConverter.converterAlterarCommandToProduto(command));
     }
 
     @Operation(summary = "Excluir um produto pelo id")

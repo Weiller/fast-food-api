@@ -1,5 +1,6 @@
 package br.com.fiap.adapter.controller.converter;
 
+import br.com.fiap.adapter.controller.command.AlterarProdutoCommand;
 import br.com.fiap.adapter.controller.command.CriarProdutoCommand;
 import br.com.fiap.adapter.repositories.produto.ProdutoEntity;
 import br.com.fiap.core.domain.entities.Produto;
@@ -34,13 +35,23 @@ public class ProdutoConverter {
                 .build();
     }
 
+    public static Produto converterAlterarCommandToProduto(AlterarProdutoCommand command) {
+        return new Produto.Builder()
+                .id(command.getId())
+                .nome(command.getNome())
+                .descricao(command.getDescricao())
+                .valor(command.getValor())
+                .categoria(ProdutoCategoriaEnum.fromString(command.getCategoria()).orElse(null))
+                .build();
+    }
+
     public static ProdutoEntity converterProdutoToEntity(Produto produto) {
         return ProdutoEntity.builder()
-                .id(produto.id())
-                .nome(produto.nome())
-                .descricao(produto.descricao())
-                .valor(produto.valor())
-                .categoria(produto.categoria())
+                .id(produto.getId())
+                .nome(produto.getNome())
+                .descricao(produto.getDescricao())
+                .valor(produto.getValor())
+                .categoria(produto.getCategoria())
                 .build();
     }
 }

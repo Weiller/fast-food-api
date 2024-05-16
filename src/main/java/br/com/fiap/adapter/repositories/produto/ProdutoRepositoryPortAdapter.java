@@ -41,7 +41,7 @@ public class ProdutoRepositoryPortAdapter implements ProdutoRepositoryPort {
 
     @Override
     public Produto excluir(Produto produto) {
-        produtoRepository.delete(produtoRepository.findById(produto.id()).get());
+        produtoRepository.deleteById(produto.getId());
 
         return produto;
     }

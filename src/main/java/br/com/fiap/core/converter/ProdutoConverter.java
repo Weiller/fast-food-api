@@ -9,11 +9,11 @@ public class ProdutoConverter {
 
     public static ProdutoDto converterProdutoToProdutoDto(Produto produto) {
         return new ProdutoDto.Builder()
-                .id(produto.id())
-                .nome(produto.nome())
-                .descricao(produto.descricao())
-                .valor(produto.valor())
-                .categoria(produto.categoria().getDescricao())
+                .id(produto.getId())
+                .nome(produto.getNome())
+                .descricao(produto.getDescricao())
+                .valor(produto.getValor())
+                .categoria(produto.getCategoria().getDescricao())
                 .build();
     }
 
