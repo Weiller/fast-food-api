@@ -8,6 +8,7 @@ import br.com.fiap.core.ports.PedidoRepositoryPort;
 import br.com.fiap.core.ports.PedidoServicePort;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class PedidoService implements PedidoServicePort {
 
@@ -24,6 +25,11 @@ public class PedidoService implements PedidoServicePort {
         }
         iniciarPedido(pedido);
         return pedidoRepositoryPort.salvar(pedido);
+    }
+
+    @Override
+    public List<Pedido> obterPedidos() {
+        return pedidoRepositoryPort.obterPedidos();
     }
 
     private static void iniciarPedido(Pedido pedido) {

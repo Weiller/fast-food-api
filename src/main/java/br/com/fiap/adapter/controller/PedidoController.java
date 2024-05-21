@@ -11,10 +11,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/pedidos")
@@ -33,6 +32,18 @@ public class PedidoController {
     public PedidoDto salvar(@RequestBody CriarPedidoCommand command) {
         Pedido pedido = pedidoServicePort.salvar(PedidoConverter.converterCommandToPedido(command));
         return PedidoConverter.converterDomainToDto(pedido);
+    }
+
+    @Operation(summary = "obter pedidos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Listar todos os pedidos", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Pedido.class))})})
+    @GetMapping
+    public List<PedidoDto> obterPedidos() {
+         return pedidoServicePort.obterPedidos()
+                 .stream()
+                 .map(PedidoConverter::converterDomainToDto)
+                 .toList();
     }
 
 }
