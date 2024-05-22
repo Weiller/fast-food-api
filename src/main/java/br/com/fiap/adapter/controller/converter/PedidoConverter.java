@@ -11,6 +11,8 @@ import br.com.fiap.core.domain.entities.ItemPedido;
 import br.com.fiap.core.domain.entities.Pedido;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class PedidoConverter {
 
@@ -68,6 +70,9 @@ public class PedidoConverter {
                 .dataHoraPagamento(pedido.getDataHoraPagamento())
                 .dataHoraCriacao(pedido.getDataHoraCriacao())
                 .dataHoraEntrega(pedido.getDataHoraEntrega())
+                .itens(pedido.getItens().stream().map(item ->
+                        new ItemPedido(item.getId(), item.getProduto().getId(), item.getPedido().getId(), item.getQuantidade()))
+                        .collect(Collectors.toList()))
                 .build();
     }
 

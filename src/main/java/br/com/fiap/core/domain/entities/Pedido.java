@@ -6,6 +6,7 @@ import br.com.fiap.core.domain.enums.StatusPedidoEnum;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Pedido {
@@ -28,7 +29,8 @@ public class Pedido {
                   StatusPedidoEnum status,
                   LocalDateTime dataHoraPagamento,
                   LocalDateTime dataHoraCriacao,
-                  LocalDateTime dataHoraEntrega) {
+                  LocalDateTime dataHoraEntrega,
+                  List<ItemPedido> itens) {
         this.id = id;
         this.clienteId = clienteId;
         this.valor = valor;
@@ -37,6 +39,7 @@ public class Pedido {
         this.dataHoraPagamento = dataHoraPagamento;
         this.dataHoraCriacao = dataHoraCriacao;
         this.dataHoraEntrega = dataHoraEntrega;
+        this.itens = itens;
     }
 
     public Long getId() {
@@ -125,6 +128,9 @@ public class Pedido {
         private  LocalDateTime dataHoraCriacao;
         private LocalDateTime dataHoraEntrega;
 
+        private List<ItemPedido> itens;
+
+
 
         public Builder id(Long id) {
             this.id = id;
@@ -165,8 +171,13 @@ public class Pedido {
             return this;
         }
 
+        public Builder itens(List<ItemPedido> itens) {
+            this.itens = itens;
+            return this;
+        }
+
         public Pedido build() {
-            return new Pedido(id, clienteId, valor, situacaoPagamento, status, dataHoraPagamento, dataHoraCriacao,dataHoraEntrega);
+            return new Pedido(id, clienteId, valor, situacaoPagamento, status, dataHoraPagamento, dataHoraCriacao,dataHoraEntrega, itens);
         }
     }
 

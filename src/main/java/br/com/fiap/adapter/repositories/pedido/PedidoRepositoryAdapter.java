@@ -5,6 +5,7 @@ import br.com.fiap.core.domain.entities.Pedido;
 import br.com.fiap.core.ports.PedidoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,7 @@ public class PedidoRepositoryAdapter implements PedidoRepositoryPort {
     }
 
     @Override
+    @Transactional
     public Optional<Pedido> obterPorId(Long id) {
         return pedidoRepository.findById(id)
                 .map(PedidoConverter::converterPedidoEntityToPedido);

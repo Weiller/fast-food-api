@@ -77,4 +77,43 @@ public class PedidoController {
         return PedidoConverter.converterDomainToDto(pedido);
     }
 
+    @Operation(summary = "realizar pagamento")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pagamento realizado com sucesso", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Pedido.class))}),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Pagamento não efetuado!", content = @Content)})
+
+    @PutMapping("/{id}/pagamento")
+    public PedidoDto realizarPagamento(@PathVariable("id") Long id) {
+        Pedido pedido = pedidoServicePort.realizarPagamento(id);
+        return PedidoConverter.converterDomainToDto(pedido);
+    }
+
+    @Operation(summary = "efetuar entrega")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Entrega realizada com sucesso", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Pedido.class))}),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Entrega não realizada!", content = @Content)})
+
+    @PutMapping("/{id}/entrega")
+    public PedidoDto efetuarEntrega(@PathVariable("id") Long id) {
+        Pedido pedido = pedidoServicePort.efetuarEntrega(id);
+        return PedidoConverter.converterDomainToDto(pedido);
+    }
+
+    @Operation(summary = "atualizar pedido para pronto")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pedido atualizado para pronto", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Pedido.class))}),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Pedido não atualizado!", content = @Content)})
+
+    @PutMapping("/{id}/atualizar-pedido-pronto")
+    public PedidoDto atualizarPedidoPronto(@PathVariable("id") Long id) {
+        Pedido pedido = pedidoServicePort.atualizarPedidoPronto(id);
+        return PedidoConverter.converterDomainToDto(pedido);
+    }
+
 }

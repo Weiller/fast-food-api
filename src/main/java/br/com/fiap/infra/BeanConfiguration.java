@@ -1,5 +1,6 @@
 package br.com.fiap.infra;
 
+import br.com.fiap.adapter.external.PagamentoServicoExterno;
 import br.com.fiap.core.ports.*;
 import br.com.fiap.core.service.ClienteService;
 import br.com.fiap.core.service.PedidoService;
@@ -21,7 +22,7 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public PedidoServicePort pedidoServiceImpl(PedidoRepositoryPort pedidoRepositoryPort, ProdutoRepositoryPort produtoRepositoryPort) {
-        return new PedidoService(pedidoRepositoryPort, produtoRepositoryPort);
+    public PedidoServicePort pedidoServiceImpl(PedidoRepositoryPort pedidoRepositoryPort, ProdutoRepositoryPort produtoRepositoryPort, PagamentoServicoExterno pagamentoServicoExterno) {
+        return new PedidoService(pedidoRepositoryPort, produtoRepositoryPort, pagamentoServicoExterno);
     }
 }
