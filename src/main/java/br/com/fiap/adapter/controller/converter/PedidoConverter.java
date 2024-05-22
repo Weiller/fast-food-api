@@ -1,16 +1,34 @@
 package br.com.fiap.adapter.controller.converter;
 
+import br.com.fiap.adapter.controller.command.AdicionarItemCommand;
 import br.com.fiap.adapter.controller.command.CriarPedidoCommand;
 import br.com.fiap.adapter.dtos.PedidoDto;
+import br.com.fiap.adapter.repositories.pedido.ItemPedidoEntity;
 import br.com.fiap.adapter.repositories.pedido.PedidoEntity;
-import br.com.fiap.adapter.repositories.produto.ProdutoEntity;
+import br.com.fiap.adapter.repositories.pedido.PedidoRepository;
+import br.com.fiap.adapter.repositories.produto.ProdutoRepository;
+import br.com.fiap.core.domain.entities.ItemPedido;
 import br.com.fiap.core.domain.entities.Pedido;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PedidoConverter {
 
-    public static Pedido converterEntityToPedido(ProdutoEntity produto) {
-        return new Pedido.Builder()
-                .id(produto.getId())
+    private PedidoRepository pedidoRepository;
+
+    private ProdutoRepository produtoRepository;
+
+    public PedidoConverter(PedidoRepository pedidoRepository, ProdutoRepository produtoRepository) {
+        this.pedidoRepository = pedidoRepository;
+        this.produtoRepository = produtoRepository;
+    }
+
+    public static ItemPedido converterItemCommandToItemPedido(AdicionarItemCommand adicionarItemCommand, Long pedidoId) {
+        return new ItemPedido.Builder()
+                .id(adicionarItemCommand.getProdutoId())
+                .produto(adicionarItemCommand.getProdutoId())
+                .pedido(pedidoId)
+                .quantidade(adicionarItemCommand.getQuantidade())
                 .build();
     }
 
@@ -21,8 +39,8 @@ public class PedidoConverter {
                 .build();
     }
 
-    public static PedidoEntity converterPedidoToEntity(Pedido pedido) {
-        return  PedidoEntity.builder()
+    public PedidoEntity converterPedidoToEntity(Pedido pedido) {
+        return PedidoEntity.builder()
                 .id(pedido.getId())
                 .clienteId(pedido.getClienteId())
                 .valor(pedido.getValor())
@@ -31,11 +49,17 @@ public class PedidoConverter {
                 .dataHoraPagamento(pedido.getDataHoraPagamento())
                 .dataHoraCriacao(pedido.getDataHoraCriacao())
                 .dataHoraEntrega(pedido.getDataHoraEntrega())
+                .itens(pedido.getItens().stream().map(item -> ItemPedidoEntity.builder()
+                        .id(item.getId())
+                        .produto(produtoRepository.findById(item.getProdutoId()).get())
+                        .pedido(pedidoRepository.findById(item.getPedidoId()).get())
+                        .quantidade(item.getQuantidade())
+                        .build()).toList())
                 .build();
     }
 
     public static Pedido converterPedidoEntityToPedido(PedidoEntity pedido) {
-        return  new Pedido.Builder()
+        return new Pedido.Builder()
                 .id(pedido.getId())
                 .clienteId(pedido.getClienteId())
                 .valor(pedido.getValor())

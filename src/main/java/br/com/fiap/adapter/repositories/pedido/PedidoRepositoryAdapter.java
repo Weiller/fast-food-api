@@ -15,9 +15,11 @@ public class PedidoRepositoryAdapter implements PedidoRepositoryPort {
 
     private final PedidoRepository pedidoRepository;
 
+    private final PedidoConverter pedidoConverter;
+
     @Override
     public Pedido salvar(Pedido pedido) {
-        var novoPedido = pedidoRepository.save(PedidoConverter.converterPedidoToEntity(pedido));
+        var novoPedido = pedidoRepository.save(pedidoConverter.converterPedidoToEntity(pedido));
         return PedidoConverter.converterPedidoEntityToPedido(novoPedido);
     }
 

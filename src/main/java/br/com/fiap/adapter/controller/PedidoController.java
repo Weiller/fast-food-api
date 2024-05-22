@@ -11,10 +11,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/pedidos")
@@ -41,10 +46,10 @@ public class PedidoController {
                     schema = @Schema(implementation = Pedido.class))})})
     @GetMapping
     public List<PedidoDto> obterPedidos() {
-         return pedidoServicePort.obterPedidos()
-                 .stream()
-                 .map(PedidoConverter::converterDomainToDto)
-                 .toList();
+        return pedidoServicePort.obterPedidos()
+                .stream()
+                .map(PedidoConverter::converterDomainToDto)
+                .toList();
     }
 
     @Operation(summary = "criar um novo pedido")
@@ -53,9 +58,9 @@ public class PedidoController {
                     schema = @Schema(implementation = Pedido.class))}),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
             @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do pedido", content = @Content)})
-    @PutMapping("/{id}/adicionar")
-    public PedidoDto adicionarItem(@RequestBody AdicionarItemCommand command) {
-        Pedido pedido = pedidoServicePort.adicionarProduto(command.getProdutoId(), command.getPedidoId());
+    @PutMapping("/{pedidoId}/adicionar")
+    public PedidoDto adicionarItem(@PathVariable("pedidoId") Long pedidoId, @RequestBody AdicionarItemCommand command) {
+        Pedido pedido = pedidoServicePort.adicionarItem(PedidoConverter.converterItemCommandToItemPedido(command, pedidoId));
         return PedidoConverter.converterDomainToDto(pedido);
     }
 

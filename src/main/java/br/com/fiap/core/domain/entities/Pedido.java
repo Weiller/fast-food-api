@@ -5,6 +5,7 @@ import br.com.fiap.core.domain.enums.StatusPedidoEnum;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
@@ -18,7 +19,7 @@ public class Pedido {
    private  LocalDateTime dataHoraCriacao;
    private LocalDateTime dataHoraEntrega;
 
-   private List<Produto> produtos;
+   private List<ItemPedido> itens = new ArrayList<>();
 
     public Pedido(Long id,
                   Long clienteId,
@@ -102,15 +103,16 @@ public class Pedido {
         this.clienteId = clienteId;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<ItemPedido> getItens() {
+        return itens;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
     }
 
-    public void adicionarProduto(Produto produto) {
+    public void adicionarItemPedido(ItemPedido itemPedido) {
+        itens.add(itemPedido);
     }
 
     public static class Builder {

@@ -1,5 +1,6 @@
 package br.com.fiap.core.service;
 
+import br.com.fiap.core.domain.entities.ItemPedido;
 import br.com.fiap.core.domain.entities.Pedido;
 import br.com.fiap.core.domain.entities.Produto;
 import br.com.fiap.core.domain.enums.SituacaoPagamentoEnum;
@@ -38,15 +39,15 @@ public class PedidoService implements PedidoServicePort {
     }
 
     @Override
-    public Pedido adicionarProduto(Long itemId, Long pedidoId) {
-        Pedido pedido = pedidoRepositoryPort.obterPorId(pedidoId).orElseThrow(() -> new BusinessException("Pedido não encontrado!"));
-        Produto produto = produtoRepositoryPort.getProdutoById(itemId);
+    public Pedido adicionarItem(ItemPedido itemPedido) {
+        Pedido pedido = pedidoRepositoryPort.obterPorId(itemPedido.getPedidoId()).orElseThrow(() -> new BusinessException("Pedido não encontrado!"));
+        Produto produto = produtoRepositoryPort.getProdutoById(itemPedido.getProdutoId());
 
         if (Objects.isNull(produto)) {
             throw new BusinessException("Produto não encontrado!");
         }
 
-        pedido.adicionarProduto(produto);
+        pedido.adicionarItemPedido(itemPedido);
         pedido.setValor(pedido.getValor().add(produto.getValor()));
         return pedidoRepositoryPort.salvar(pedido);
     }

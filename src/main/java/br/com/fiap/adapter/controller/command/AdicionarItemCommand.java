@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdicionarItemCommand {
-    private Long pedidoId;
     private Long produtoId;
+    private Integer quantidade;
 }
