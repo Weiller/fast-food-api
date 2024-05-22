@@ -64,6 +64,13 @@ public class PedidoController {
         return PedidoConverter.converterDomainToDto(pedido);
     }
 
+    @Operation(summary = "cancelar pedido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pedido cancelado com sucesso", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Pedido.class))}),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Pedido não existe!", content = @Content)})
+
     @PutMapping("/{id}/cancelar")
     public PedidoDto cancelarPedido(@PathVariable("id") Long id) {
         Pedido pedido = pedidoServicePort.cancelarPedido(id);

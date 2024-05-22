@@ -57,8 +57,12 @@ public class PedidoService implements PedidoServicePort {
         Pedido pedido = pedidoRepositoryPort.obterPorId(id)
                 .orElseThrow(() -> new BusinessException("Pedido não existe!"));
 
+       return cancelarPedido(pedido);
+    }
+
+    private Pedido cancelarPedido(Pedido pedido) {
         pedido.setStatus(StatusPedidoEnum.CANCELADO);
-        return pedido;
+        return pedidoRepositoryPort.salvar(pedido);
     }
 
     private static void iniciarPedido(Pedido pedido) {
