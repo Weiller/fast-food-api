@@ -53,7 +53,7 @@ public class PedidoController {
                     schema = @Schema(implementation = Pedido.class))}),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
             @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do pedido", content = @Content)})
-    @PostMapping
+    @PutMapping("/{id}/adicionar")
     public PedidoDto adicionarItem(@RequestBody AdicionarItemCommand command) {
         Pedido pedido = pedidoServicePort.adicionarProduto(command.getProdutoId(), command.getPedidoId());
         return PedidoConverter.converterDomainToDto(pedido);
