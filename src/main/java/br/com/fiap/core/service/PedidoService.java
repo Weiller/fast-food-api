@@ -12,6 +12,7 @@ import br.com.fiap.core.ports.ProdutoRepositoryPort;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class PedidoService implements PedidoServicePort {
 
@@ -40,7 +41,7 @@ public class PedidoService implements PedidoServicePort {
 
     @Override
     public Pedido adicionarProduto(Long itemId, Long pedidoId) {
-        Pedido pedido = pedidoRepositoryPort.getPedidoById(pedidoId);
+        Pedido pedido = pedidoRepositoryPort.obterPorId(pedidoId).orElseThrow(() -> new BusinessException("Pedido não encontrado!"));
         Produto produto = produtoRepositoryPort.getProdutoById(itemId);
 
         if (Objects.isNull(produto)) {
@@ -50,6 +51,15 @@ public class PedidoService implements PedidoServicePort {
         pedido.adicionarProduto(produto);
         pedido.setValor(pedido.getValor().add(produto.getValor()));
         return pedidoRepositoryPort.salvar(pedido);
+    }
+
+    @Override
+    public Pedido cancelarPedido(Long id) {
+         Pedido pedido = pedidoRepositoryPort.obterPorId(id)
+                .orElseThrow(() -> new BusinessException("Pedido não existe!"));
+
+        pedido.setStatus(StatusPedidoEnum.CANCELADO);
+        return pedido;
     }
 
     private static void iniciarPedido(Pedido pedido) {

@@ -10,4 +10,6 @@ public interface PedidoServicePort {
     List<Pedido> obterPedidos();
 
     Pedido adicionarProduto(Long itemId, Long pedidoId);
+
+    Pedido cancelarPedido(Long id);
 }
