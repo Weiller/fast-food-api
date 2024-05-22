@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -26,5 +27,11 @@ public class PedidoRepositoryAdapter implements PedidoRepositoryPort {
                 .stream()
                 .map(PedidoConverter::converterPedidoEntityToPedido)
                 .toList();
+    }
+
+    @Override
+    public Optional<Pedido> obterPorId(Long id) {
+        return pedidoRepository.findById(id)
+                .map(PedidoConverter::converterPedidoEntityToPedido);
     }
 }

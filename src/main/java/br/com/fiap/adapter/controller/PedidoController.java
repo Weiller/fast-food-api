@@ -46,4 +46,10 @@ public class PedidoController {
                  .toList();
     }
 
+    @PutMapping("/{id}/cancelar")
+    public PedidoDto cancelarPedido(@PathVariable("id") Long id) {
+        Pedido pedido = pedidoServicePort.cancelarPedido(id);
+        return PedidoConverter.converterDomainToDto(pedido);
+    }
+
 }
