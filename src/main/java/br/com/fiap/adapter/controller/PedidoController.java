@@ -1,5 +1,6 @@
 package br.com.fiap.adapter.controller;
 
+import br.com.fiap.adapter.controller.command.AdicionarItemCommand;
 import br.com.fiap.adapter.controller.command.CriarPedidoCommand;
 import br.com.fiap.adapter.controller.converter.PedidoConverter;
 import br.com.fiap.adapter.dtos.PedidoDto;
@@ -44,6 +45,18 @@ public class PedidoController {
                  .stream()
                  .map(PedidoConverter::converterDomainToDto)
                  .toList();
+    }
+
+    @Operation(summary = "criar um novo pedido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pedido criado com sucesso", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Pedido.class))}),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do pedido", content = @Content)})
+    @PostMapping
+    public PedidoDto adicionarItem(@RequestBody AdicionarItemCommand command) {
+        Pedido pedido = pedidoServicePort.adicionarProduto(command.getProdutoId(), command.getPedidoId());
+        return PedidoConverter.converterDomainToDto(pedido);
     }
 
 }

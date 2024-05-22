@@ -11,7 +11,7 @@ public enum StatusPedidoEnum {
 
     INICIADO("Iniciado"),
     ANDAMENTO("Andamento"),
-    CONCLUIDO("Concluído"),
+    PRONTO("Pronto"),
     ENTREGUE("Entregue");
 
     private String descricao;

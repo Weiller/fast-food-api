@@ -9,7 +9,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public enum SituacaoPagamentoEnum {
 
-    PENDENTE("Pedente"),
+    PENDENTE("Pendente"),
     PAGO("Pago");
 
     private String descricao;

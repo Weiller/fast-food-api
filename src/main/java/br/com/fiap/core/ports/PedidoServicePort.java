@@ -8,4 +8,6 @@ public interface PedidoServicePort {
     Pedido salvar(Pedido pedido);
 
     List<Pedido> obterPedidos();
+
+    Pedido adicionarProduto(Long itemId, Long pedidoId);
 }
