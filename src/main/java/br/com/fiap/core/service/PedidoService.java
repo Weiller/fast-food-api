@@ -7,12 +7,10 @@ import br.com.fiap.core.domain.enums.StatusPedidoEnum;
 import br.com.fiap.core.exceptions.BusinessException;
 import br.com.fiap.core.ports.PedidoRepositoryPort;
 import br.com.fiap.core.ports.PedidoServicePort;
-
 import br.com.fiap.core.ports.ProdutoRepositoryPort;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class PedidoService implements PedidoServicePort {
 
@@ -55,7 +53,7 @@ public class PedidoService implements PedidoServicePort {
 
     @Override
     public Pedido cancelarPedido(Long id) {
-         Pedido pedido = pedidoRepositoryPort.obterPorId(id)
+        Pedido pedido = pedidoRepositoryPort.obterPorId(id)
                 .orElseThrow(() -> new BusinessException("Pedido não existe!"));
 
         pedido.setStatus(StatusPedidoEnum.CANCELADO);
