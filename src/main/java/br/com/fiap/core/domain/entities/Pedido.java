@@ -20,7 +20,7 @@ public class Pedido {
    private  LocalDateTime dataHoraCriacao;
    private LocalDateTime dataHoraEntrega;
 
-   private List<ItemPedido> itens = new ArrayList<>();
+   private List<ItemPedido> itens;
 
     public Pedido(Long id,
                   Long clienteId,
@@ -118,6 +118,10 @@ public class Pedido {
         itens.add(itemPedido);
     }
 
+    public void removerItemPedido(ItemPedido itemPedido) {
+        itens.removeIf(item -> item.getProdutoId().equals(itemPedido.getProdutoId()));
+    }
+
     public static class Builder {
         private Long id;
         private BigDecimal valor;
@@ -129,8 +133,6 @@ public class Pedido {
         private LocalDateTime dataHoraEntrega;
 
         private List<ItemPedido> itens;
-
-
 
         public Builder id(Long id) {
             this.id = id;

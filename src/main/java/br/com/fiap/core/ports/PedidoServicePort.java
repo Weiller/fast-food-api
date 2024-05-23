@@ -12,6 +12,8 @@ public interface PedidoServicePort {
 
     Pedido adicionarItem(ItemPedido itemPedido);
 
+    Pedido removerItem(ItemPedido itemPedido);
+
     Pedido cancelarPedido(Long id);
 
     Pedido realizarPagamento(Long id);

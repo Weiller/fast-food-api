@@ -2,6 +2,7 @@ package br.com.fiap.adapter.controller;
 
 import br.com.fiap.adapter.controller.command.AdicionarItemCommand;
 import br.com.fiap.adapter.controller.command.CriarPedidoCommand;
+import br.com.fiap.adapter.controller.command.RemoverItemCommand;
 import br.com.fiap.adapter.controller.converter.PedidoConverter;
 import br.com.fiap.adapter.dtos.PedidoDto;
 import br.com.fiap.core.domain.entities.Pedido;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,15 +54,27 @@ public class PedidoController {
                 .toList();
     }
 
-    @Operation(summary = "criar um novo pedido")
+    @Operation(summary = "adicionar item no pedido")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pedido criado com sucesso", content = {@Content(mediaType = "application/json",
+            @ApiResponse(responseCode = "200", description = "Item adicionado com sucesso", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Pedido.class))}),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Erro de validação na adição do pedido", content = @Content)})
+    @PutMapping("/{pedidoId}/adicionar")
+    public PedidoDto adicionarItem(@PathVariable("pedidoId") Long pedidoId, @RequestBody AdicionarItemCommand command) {
+        Pedido pedido = pedidoServicePort.adicionarItem(PedidoConverter.converterAdicionarItemCommandToItemPedido(command, pedidoId));
+        return PedidoConverter.converterDomainToDto(pedido);
+    }
+
+    @Operation(summary = "Remover um item do pedido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Item removido com sucesso", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = Pedido.class))}),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
             @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do pedido", content = @Content)})
-    @PutMapping("/{pedidoId}/adicionar")
-    public PedidoDto adicionarItem(@PathVariable("pedidoId") Long pedidoId, @RequestBody AdicionarItemCommand command) {
-        Pedido pedido = pedidoServicePort.adicionarItem(PedidoConverter.converterItemCommandToItemPedido(command, pedidoId));
+    @DeleteMapping("/{pedidoId}/remover")
+    public PedidoDto removerItem(@PathVariable("pedidoId") Long pedidoId, @RequestBody RemoverItemCommand command) {
+        Pedido pedido = pedidoServicePort.removerItem(PedidoConverter.converterRemoverItemCommandToItemPedido(command, pedidoId));
         return PedidoConverter.converterDomainToDto(pedido);
     }
 

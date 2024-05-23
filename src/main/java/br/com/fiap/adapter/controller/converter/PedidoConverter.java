@@ -2,6 +2,8 @@ package br.com.fiap.adapter.controller.converter;
 
 import br.com.fiap.adapter.controller.command.AdicionarItemCommand;
 import br.com.fiap.adapter.controller.command.CriarPedidoCommand;
+import br.com.fiap.adapter.controller.command.RemoverItemCommand;
+import br.com.fiap.adapter.dtos.ItemPedidoDto;
 import br.com.fiap.adapter.dtos.PedidoDto;
 import br.com.fiap.adapter.repositories.pedido.ItemPedidoEntity;
 import br.com.fiap.adapter.repositories.pedido.PedidoEntity;
@@ -9,9 +11,8 @@ import br.com.fiap.adapter.repositories.pedido.PedidoRepository;
 import br.com.fiap.adapter.repositories.produto.ProdutoRepository;
 import br.com.fiap.core.domain.entities.ItemPedido;
 import br.com.fiap.core.domain.entities.Pedido;
-import org.springframework.stereotype.Component;
-
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PedidoConverter {
@@ -25,12 +26,19 @@ public class PedidoConverter {
         this.produtoRepository = produtoRepository;
     }
 
-    public static ItemPedido converterItemCommandToItemPedido(AdicionarItemCommand adicionarItemCommand, Long pedidoId) {
+    public static ItemPedido converterAdicionarItemCommandToItemPedido(AdicionarItemCommand adicionarItemCommand, Long pedidoId) {
         return new ItemPedido.Builder()
-                .id(adicionarItemCommand.getProdutoId())
                 .produto(adicionarItemCommand.getProdutoId())
                 .pedido(pedidoId)
                 .quantidade(adicionarItemCommand.getQuantidade())
+                .build();
+    }
+
+    public static ItemPedido converterRemoverItemCommandToItemPedido(RemoverItemCommand removerItemCommand, Long pedidoId) {
+        return new ItemPedido.Builder()
+                .produto(removerItemCommand.getProdutoId())
+                .pedido(pedidoId)
+                .quantidade(removerItemCommand.getQuantidade())
                 .build();
     }
 
@@ -71,7 +79,7 @@ public class PedidoConverter {
                 .dataHoraCriacao(pedido.getDataHoraCriacao())
                 .dataHoraEntrega(pedido.getDataHoraEntrega())
                 .itens(pedido.getItens().stream().map(item ->
-                        new ItemPedido(item.getId(), item.getProduto().getId(), item.getPedido().getId(), item.getQuantidade()))
+                                new ItemPedido(item.getId(), item.getProduto().getId(), item.getPedido().getId(), item.getQuantidade()))
                         .collect(Collectors.toList()))
                 .build();
     }
@@ -85,7 +93,8 @@ public class PedidoConverter {
                 pedido.getStatus(),
                 pedido.getDataHoraPagamento(),
                 pedido.getDataHoraCriacao(),
-                pedido.getDataHoraEntrega()
+                pedido.getDataHoraEntrega(),
+                pedido.getItens().stream().map(i -> new ItemPedidoDto(i.getId())).collect(Collectors.toList())
         );
     }
 }
