@@ -4,7 +4,7 @@ nome VARCHAR(100) NOT NULL,
 descricao VARCHAR(250) NOT NULL,
 valor NUMERIC NOT NULL,
 categoria VARCHAR(1) NOT NULL,
-data_inclusao DATE NOT NULL
+data_inclusao TIMESTAMP NOT NULL
 );
 
 CREATE SEQUENCE sq_produto

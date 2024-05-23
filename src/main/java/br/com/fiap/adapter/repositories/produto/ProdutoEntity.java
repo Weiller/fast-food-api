@@ -12,6 +12,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,4 +46,7 @@ public class ProdutoEntity {
     @Column(name = "categoria", nullable = false)
     @Enumerated(EnumType.STRING)
     private ProdutoCategoriaEnum categoria;
+
+    @Column(name = "DATA_INCLUSAO", nullable = false)
+    private LocalDateTime dataInclusao = LocalDateTime.now();
 }

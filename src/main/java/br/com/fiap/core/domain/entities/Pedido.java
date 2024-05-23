@@ -132,7 +132,7 @@ public class Pedido {
         private  LocalDateTime dataHoraCriacao;
         private LocalDateTime dataHoraEntrega;
 
-        private List<ItemPedido> itens;
+        private List<ItemPedido> itens = new ArrayList<>();
 
         public Builder id(Long id) {
             this.id = id;

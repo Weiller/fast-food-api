@@ -2,6 +2,7 @@ package br.com.fiap.adapter.repositories.pedido;
 
 import br.com.fiap.adapter.controller.converter.PedidoConverter;
 import br.com.fiap.core.domain.entities.Pedido;
+import br.com.fiap.core.domain.enums.StatusPedidoEnum;
 import br.com.fiap.core.ports.PedidoRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class PedidoRepositoryAdapter implements PedidoRepositoryPort {
 
     @Override
     public List<Pedido> obterPedidos() {
-        return pedidoRepository.findAll()
+        return pedidoRepository.findByStatus(StatusPedidoEnum.ANDAMENTO)
                 .stream()
                 .map(PedidoConverter::converterPedidoEntityToPedido)
                 .toList();

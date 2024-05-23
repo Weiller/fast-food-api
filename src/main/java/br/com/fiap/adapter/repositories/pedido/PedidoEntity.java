@@ -49,6 +49,6 @@ public class PedidoEntity {
     @Column(name = "data_hora_entrega")
     private LocalDateTime dataHoraEntrega;
 
-    @OneToMany(mappedBy = "pedido", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pedido", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ItemPedidoEntity> itens;
 }

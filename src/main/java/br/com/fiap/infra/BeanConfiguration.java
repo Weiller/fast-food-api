@@ -22,7 +22,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public PedidoServicePort pedidoServiceImpl(PedidoRepositoryPort pedidoRepositoryPort, ProdutoRepositoryPort produtoRepositoryPort, PagamentoServicoExterno pagamentoServicoExterno) {
-        return new PedidoService(pedidoRepositoryPort, produtoRepositoryPort, pagamentoServicoExterno);
+    public PedidoServicePort pedidoServiceImpl(PedidoRepositoryPort pedidoRepositoryPort, ProdutoRepositoryPort produtoRepositoryPort,
+                                               PagamentoServicoExternoPort pagamentoServicoExternoPort, NotificacaoSonoraPort notificacaoSonoraPort) {
+        return new PedidoService(pedidoRepositoryPort, produtoRepositoryPort, pagamentoServicoExternoPort, notificacaoSonoraPort);
     }
 }

@@ -12,6 +12,5 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CriarPedidoCommand {
-    private Long clienteId;;
-    private BigDecimal valor;
+    private Long clienteId;
 }

@@ -4,7 +4,6 @@ import br.com.fiap.adapter.controller.command.AlterarProdutoCommand;
 import br.com.fiap.adapter.controller.command.CriarProdutoCommand;
 import br.com.fiap.adapter.controller.converter.ProdutoConverter;
 import br.com.fiap.core.domain.entities.Cliente;
-import br.com.fiap.core.domain.entities.Produto;
 import br.com.fiap.core.dto.ProdutoDto;
 import br.com.fiap.core.ports.ProdutoServicePort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,8 +38,8 @@ public class ProdutoController {
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
             @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do produto", content = @Content)})
     @PostMapping
-    public Produto salvar(@RequestBody CriarProdutoCommand command) {
-        return produtoServicePort.salvar(ProdutoConverter.converterCommandToProduto(command));
+    public ProdutoDto salvar(@RequestBody CriarProdutoCommand command) {
+        return ProdutoConverter.converterProdutoToDto(produtoServicePort.salvar(ProdutoConverter.converterCommandToProduto(command))) ;
     }
 
     @Operation(summary = "Alterar um produto")
@@ -50,8 +49,8 @@ public class ProdutoController {
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
             @ApiResponse(responseCode = "412", description = "Erro de validação na alteração do produto", content = @Content)})
     @PutMapping
-    public Produto alterar(@RequestBody AlterarProdutoCommand command) {
-        return produtoServicePort.salvar(ProdutoConverter.converterAlterarCommandToProduto(command));
+    public ProdutoDto alterar(@RequestBody AlterarProdutoCommand command) {
+        return ProdutoConverter.converterProdutoToDto(produtoServicePort.salvar(ProdutoConverter.converterAlterarCommandToProduto(command)));
     }
 
     @Operation(summary = "Excluir um produto pelo id")
@@ -61,8 +60,8 @@ public class ProdutoController {
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
             @ApiResponse(responseCode = "412", description = "Erro de negócio na exclusão.", content = @Content)})
     @DeleteMapping("/{id}")
-    public Produto excluir(@PathVariable("id") Long id) {
-        return produtoServicePort.excluir(id);
+    public ProdutoDto excluir(@PathVariable("id") Long id) {
+        return ProdutoConverter.converterProdutoToDto(produtoServicePort.excluir(id));
     }
 
     @Operation(summary = "Retornar uma lista de produtos pela categoria")

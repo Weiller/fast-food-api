@@ -47,8 +47,8 @@ public class PedidoController {
             @ApiResponse(responseCode = "200", description = "Listar todos os pedidos", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = Pedido.class))})})
     @GetMapping
-    public List<PedidoDto> obterPedidos() {
-        return pedidoServicePort.obterPedidos()
+    public List<PedidoDto> obterPedidosEmAndamento() {
+        return pedidoServicePort.obterPedidosEmAndamento()
                 .stream()
                 .map(PedidoConverter::converterDomainToDto)
                 .toList();

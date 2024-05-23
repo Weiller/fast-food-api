@@ -5,6 +5,8 @@ import br.com.fiap.core.domain.entities.ItemPedido;
 import br.com.fiap.core.domain.entities.Pedido;
 import br.com.fiap.core.domain.entities.Produto;
 import br.com.fiap.core.exceptions.BusinessException;
+import br.com.fiap.core.ports.NotificacaoSonoraPort;
+import br.com.fiap.core.ports.PagamentoServicoExternoPort;
 import br.com.fiap.core.ports.PedidoRepositoryPort;
 import br.com.fiap.core.ports.PedidoServicePort;
 import br.com.fiap.core.ports.ProdutoRepositoryPort;
@@ -28,12 +30,16 @@ public class PedidoService implements PedidoServicePort {
 
     private final ProdutoRepositoryPort produtoRepositoryPort;
 
-    private final PagamentoServicoExterno pagamentoServicoExterno;
+    private final PagamentoServicoExternoPort pagamentoServicoExternoPort;
 
-    public PedidoService(PedidoRepositoryPort pedidoRepositoryPort, ProdutoRepositoryPort produtoRepositoryPort, PagamentoServicoExterno pagamentoServicoExterno) {
+    private final NotificacaoSonoraPort notificacaoSonoraPort;
+
+    public PedidoService(PedidoRepositoryPort pedidoRepositoryPort, ProdutoRepositoryPort produtoRepositoryPort,
+                         PagamentoServicoExternoPort pagamentoServicoExterno, NotificacaoSonoraPort notificacaoSonoraPort) {
         this.pedidoRepositoryPort = pedidoRepositoryPort;
         this.produtoRepositoryPort = produtoRepositoryPort;
-        this.pagamentoServicoExterno = pagamentoServicoExterno;
+        this.pagamentoServicoExternoPort = pagamentoServicoExterno;
+        this.notificacaoSonoraPort = notificacaoSonoraPort;
     }
 
     @Override
@@ -46,7 +52,7 @@ public class PedidoService implements PedidoServicePort {
     }
 
     @Override
-    public List<Pedido> obterPedidos() {
+    public List<Pedido> obterPedidosEmAndamento() {
         return pedidoRepositoryPort.obterPedidos();
     }
 
@@ -119,7 +125,7 @@ public class PedidoService implements PedidoServicePort {
             throw new BusinessException("Não possui itens no pedido!");
         }
 
-        if (pagamentoServicoExterno.efetuarPagamento("QrCode")) {
+        if (pagamentoServicoExternoPort.efetuarPagamento("QrCode")) {
             pedido.setSituacaoPagamento(PAGO);
             pedido.setStatus(ANDAMENTO);
             pedido.setDataHoraPagamento(LocalDateTime.now());
@@ -138,7 +144,7 @@ public class PedidoService implements PedidoServicePort {
             throw new BusinessException("Pedido não esta pronto para entrega!");
         }
 
-        if (pedido.getSituacaoPagamento().equals(PAGO)) {
+        if (pedido.getSituacaoPagamento().equals(PENDENTE)) {
             throw new BusinessException("Pagamento esta pendente!");
         }
 
@@ -157,11 +163,19 @@ public class PedidoService implements PedidoServicePort {
         }
 
         pedido.setStatus(PRONTO);
-
+        notificacaoSonoraPort.notificar();
         return pedidoRepositoryPort.salvar(pedido);
     }
 
     private Pedido cancelarPedido(Pedido pedido) {
+        if(pedido.getStatus().equals(CANCELADO)) {
+            throw new BusinessException("Pedido já foi cancelado!");
+        }
+
+        if(pedido.getStatus().equals(ENTREGUE)) {
+            throw new BusinessException("Pedido já foi entregue!");
+        }
+
         pedido.setStatus(CANCELADO);
         return pedidoRepositoryPort.salvar(pedido);
     }

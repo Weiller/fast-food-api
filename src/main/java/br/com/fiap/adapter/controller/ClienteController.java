@@ -2,6 +2,7 @@ package br.com.fiap.adapter.controller;
 
 import br.com.fiap.adapter.controller.command.CriarClienteCommand;
 import br.com.fiap.adapter.controller.converter.ClienteConverter;
+import br.com.fiap.adapter.dtos.ClienteDto;
 import br.com.fiap.core.domain.entities.Cliente;
 import br.com.fiap.core.ports.ClienteServicePort;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,8 +34,8 @@ public class ClienteController {
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
             @ApiResponse(responseCode = "412", description = "Cliente não encontrado", content = @Content) })
     @GetMapping("/{cpf}")
-    public Cliente getClienteByCpf(@PathVariable("cpf") String cpf) {
-        return clienteServicePort.getClienteByCpf(cpf);
+    public ClienteDto getClienteByCpf(@PathVariable("cpf") String cpf) {
+        return ClienteConverter.converterClienteToDto(clienteServicePort.getClienteByCpf(cpf));
     }
 
     @Operation(summary = "Salvar um novo cliente")
@@ -44,8 +45,8 @@ public class ClienteController {
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
             @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do cliente", content = @Content) })
     @PostMapping
-    public Cliente salvar(@RequestBody CriarClienteCommand command) {
-        return clienteServicePort.salvar(ClienteConverter.converterCommandToCliente(command));
+    public ClienteDto salvar(@RequestBody CriarClienteCommand command) {
+        return ClienteConverter.converterClienteToDto(clienteServicePort.salvar(ClienteConverter.converterCommandToCliente(command)));
     }
 
 }

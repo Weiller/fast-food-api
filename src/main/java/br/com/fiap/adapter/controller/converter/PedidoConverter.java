@@ -11,6 +11,7 @@ import br.com.fiap.adapter.repositories.pedido.PedidoRepository;
 import br.com.fiap.adapter.repositories.produto.ProdutoRepository;
 import br.com.fiap.core.domain.entities.ItemPedido;
 import br.com.fiap.core.domain.entities.Pedido;
+import java.math.BigDecimal;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +46,7 @@ public class PedidoConverter {
     public static Pedido converterCommandToPedido(CriarPedidoCommand command) {
         return new Pedido.Builder()
                 .clienteId(command.getClienteId())
-                .valor(command.getValor())
+                .valor(BigDecimal.ZERO)
                 .build();
     }
 

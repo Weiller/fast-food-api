@@ -1,6 +1,7 @@
 package br.com.fiap.adapter.controller.converter;
 
 import br.com.fiap.adapter.controller.command.CriarClienteCommand;
+import br.com.fiap.adapter.dtos.ClienteDto;
 import br.com.fiap.adapter.repositories.cliente.ClienteEntity;
 import br.com.fiap.core.domain.entities.Cliente;
 import java.time.LocalDateTime;
@@ -30,6 +31,15 @@ public class ClienteConverter {
                 .nome(cliente.getNome())
                 .cpf(cliente.getCpf())
                 .email(cliente.getEmail())
+                .build();
+    }
+
+    public static ClienteDto converterClienteToDto(Cliente cliente) {
+        return ClienteDto.builder()
+                .id(cliente.id())
+                .nome(cliente.nome())
+                .cpf(cliente.cpf())
+                .email(cliente.email())
                 .build();
     }
 

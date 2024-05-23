@@ -5,6 +5,8 @@ import br.com.fiap.adapter.controller.command.CriarProdutoCommand;
 import br.com.fiap.adapter.repositories.produto.ProdutoEntity;
 import br.com.fiap.core.domain.entities.Produto;
 import br.com.fiap.core.domain.enums.ProdutoCategoriaEnum;
+import br.com.fiap.core.dto.ProdutoDto;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +54,17 @@ public class ProdutoConverter {
                 .descricao(produto.getDescricao())
                 .valor(produto.getValor())
                 .categoria(produto.getCategoria())
+                .dataInclusao(LocalDateTime.now())
+                .build();
+    }
+
+    public static ProdutoDto converterProdutoToDto(Produto produto) {
+        return new ProdutoDto.Builder()
+                .id(produto.getId())
+                .nome(produto.getNome())
+                .descricao(produto.getDescricao())
+                .valor(produto.getValor())
+                .categoria(produto.getCategoria().getDescricao())
                 .build();
     }
 }
