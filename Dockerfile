@@ -7,6 +7,7 @@ COPY . /app
 
 RUN mvn clean install -DskipTests
 
+# Resposavel por realizar o deploy da aplicação 
 FROM openjdk:17
 
 LABEL maintainer="Grupo 47"

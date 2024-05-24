@@ -1,6 +1,43 @@
 # Sistema de Pedidos
 
 Este projeto é um sistema de pedidos, projetado para atender às necessidades de restaurantes de fast food. Ele permite que os usuários façam pedidos de alimentos e bebidas, acompanhem o status de seus pedidos e realizem o pagamento online.
+
+## Docker Setup - Ambiente local
+
+### Requisitos para execução local
+
+- **Docker**: Para instalar o Docker, siga as instruções no [site oficial](https://docs.docker.com/get-docker/).
+- **Docker Compose**: Para instalar o Docker Compose, siga as instruções no [site oficial](https://docs.docker.com/compose/install/).
+
+As imagens utilizadas para a construção e execução da aplicação foram escolhidas com base na compatibilidade com processadores AMD e ARM.
+
+### Execução
+
+Para executar o projeto deve executar o comando 
+
+```bash
+docker compose up
+```
+
+### Definição do docker compose
+
+#### Etapa de Construção
+
+1. Utiliza a imagem `maven:3.8-openjdk-17` como base.
+2. Define o diretório de trabalho para `/app`.
+3. Copia todos os arquivos do diretório atual para `/app`.
+4. Executa o comando `mvn clean install -DskipTests` para compilar a aplicação, pulando os testes.
+
+#### Etapa de Execução
+
+1. Utiliza a imagem `openjdk:17` como base.
+2. Define o maintainer do projeto como "Grupo 47".
+3. Define o diretório de trabalho para `/app`.
+4. Copia o artefato gerado na etapa de construção para o diretório de trabalho.
+5. Define o comando de entrada para executar o jar da aplicação.
+6. Expõe a porta `8080` para acesso externo.
+
+
 ## Funcionalidades
 
 O sistema é composto por várias funcionalidades, incluindo:
