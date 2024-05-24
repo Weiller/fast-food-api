@@ -37,6 +37,22 @@ docker compose up
 5. Define o comando de entrada para executar o jar da aplicação.
 6. Expõe a porta `8080` para acesso externo.
 
+## Tecnologias Utilizadas
+
+Este projeto utiliza várias tecnologias para o desenvolvimento, teste e execução da aplicação. Abaixo estão listadas as principais tecnologias utilizadas:
+
+- **Java 17**: A linguagem de programação principal utilizada no projeto.
+- **Spring Boot 3.2.5**: Um framework popular para desenvolvimento de aplicações Java.
+- **Maven**: Uma ferramenta de automação de compilação e gerenciamento de dependências para projetos Java.
+- **Lombok**: Uma biblioteca que automatiza a geração de código repetitivo em projetos Java.
+- **PostgreSQL**: Um sistema de gerenciamento de banco de dados relacional.
+- **Git**: Um sistema de controle de versão distribuído para gerenciar o código fonte do projeto.
+- **Docker**: Uma plataforma para desenvolver, enviar e executar aplicativos em contêineres.
+- **docker-compose**: Uma ferramenta para definir e executar aplicativos Docker de vários contêineres.
+- **Flyway**: Uma ferramenta de migração de banco de dados que permite evoluir facilmente o esquema do banco de dados ao longo do tempo.
+
+
+Essas tecnologias combinadas oferecem um ambiente de desenvolvimento robusto e eficiente para a construção e execução da aplicação.
 
 ## Funcionalidades
 
