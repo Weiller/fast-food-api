@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-fast-food-api
+  labels:
+    app: pod-fast-food-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pod-fast-food-api
+  template:
+    metadata:
+      labels:
+        app: pod-fast-food-api
+    spec:
+      containers:
+        - name: backend-fast-food-api
+          image: weillerschepis/fiap:3
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "1024m"
+            limits:
+              memory: "128Mi"
+              cpu: "1024m"
+          env:
+            - name: RDS_HOSTNAME
+              value: postgres
+            - name: RDS_PORT
+              value: "5432"
+            - name: RDS_USERNAME
+              value: postgres
+            - name: RDS_PASSWORD
+              value: postgres
+            - name: PROFILE
+              value: dev
