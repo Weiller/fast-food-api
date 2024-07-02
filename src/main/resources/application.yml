@@ -23,4 +23,16 @@ spring:
 cors:
   url: http://localhost:3000
 
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState
+      enabled: true
+
 
