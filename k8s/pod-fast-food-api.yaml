@@ -18,6 +18,7 @@ spec:
         - name: backend-fast-food-api
           image: weillerschepis/fiap:6
           readinessProbe:
+            failureThreshold: 3
             httpGet:
               path: /actuator/health/readiness
               port: 8080
@@ -25,10 +26,11 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
           livenessProbe:
+            failureThreshold: 3
             httpGet:
               path: /actuator/health/liveness
               port: 8080
-            initialDelaySeconds: 60
+            initialDelaySeconds: 120
             periodSeconds: 10
             timeoutSeconds: 5
           ports:
