@@ -26,8 +26,8 @@ public class PedidoRepositoryAdapter implements PedidoRepositoryPort {
     }
 
     @Override
-    public List<Pedido> obterPedidos() {
-        return pedidoRepository.findByStatus(StatusPedidoEnum.ANDAMENTO)
+    public List<Pedido> obterPedidos(List<StatusPedidoEnum> statusList) {
+        return pedidoRepository.findByStatus(statusList)
                 .stream()
                 .map(PedidoConverter::converterPedidoEntityToPedido)
                 .toList();

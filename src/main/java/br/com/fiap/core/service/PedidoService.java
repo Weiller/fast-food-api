@@ -1,9 +1,10 @@
 package br.com.fiap.core.service;
 
-import br.com.fiap.adapter.external.PagamentoServicoExterno;
 import br.com.fiap.core.domain.entities.ItemPedido;
 import br.com.fiap.core.domain.entities.Pedido;
 import br.com.fiap.core.domain.entities.Produto;
+import br.com.fiap.core.domain.enums.StatusPagamentoEnum;
+import br.com.fiap.core.domain.enums.StatusPedidoEnum;
 import br.com.fiap.core.exceptions.BusinessException;
 import br.com.fiap.core.ports.NotificacaoSonoraPort;
 import br.com.fiap.core.ports.PagamentoServicoExternoPort;
@@ -12,8 +13,13 @@ import br.com.fiap.core.ports.PedidoServicePort;
 import br.com.fiap.core.ports.ProdutoRepositoryPort;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import org.springframework.web.client.HttpClientErrorException;
 import static br.com.fiap.core.domain.enums.SituacaoPagamentoEnum.PAGO;
 import static br.com.fiap.core.domain.enums.SituacaoPagamentoEnum.PENDENTE;
 import static br.com.fiap.core.domain.enums.StatusPedidoEnum.ANDAMENTO;
@@ -52,8 +58,17 @@ public class PedidoService implements PedidoServicePort {
     }
 
     @Override
-    public List<Pedido> obterPedidosEmAndamento() {
-        return pedidoRepositoryPort.obterPedidos();
+    public List<Pedido> obterPedidos() {
+        List<Pedido> pedidos = new ArrayList<>(pedidoRepositoryPort.obterPedidos(List.of(StatusPedidoEnum.PRONTO, StatusPedidoEnum.ANDAMENTO, StatusPedidoEnum.ENTREGUE)));
+
+        Map<StatusPedidoEnum, Integer> statusOrdem = new HashMap<>();
+        statusOrdem.put(StatusPedidoEnum.PRONTO, 1);
+        statusOrdem.put(StatusPedidoEnum.ANDAMENTO, 2);
+        statusOrdem.put(StatusPedidoEnum.ENTREGUE, 3);
+
+        pedidos.sort(Comparator.comparing(pedido -> statusOrdem.getOrDefault(pedido.getStatus(), Integer.MAX_VALUE)));
+
+        return pedidos;
     }
 
     @Override
@@ -118,21 +133,33 @@ public class PedidoService implements PedidoServicePort {
     }
 
     @Override
-    public Pedido realizarPagamento(Long id) {
+    public Pedido efetuarPedido(Long id) {
         Pedido pedido = obterPedido(id);
 
-        if (isEmpty(pedido.getItens())) {
-            throw new BusinessException("Não possui itens no pedido!");
+        try {
+            boolean pagamentoEfetuado = pagamentoServicoExternoPort.efetuarPagamento("QrCode", id, pedido.getValor());
+
+            if(!pagamentoEfetuado) {
+                throw new BusinessException("Pedido não realizado, houve erro no pagamento!");
+            }
+        } catch (HttpClientErrorException e) {
+            throw new BusinessException(e.getMessage());
         }
 
-        if (pagamentoServicoExternoPort.efetuarPagamento("QrCode")) {
-            pedido.setSituacaoPagamento(PAGO);
-            pedido.setStatus(ANDAMENTO);
-            pedido.setDataHoraPagamento(LocalDateTime.now());
-        } else {
-            pedido.setSituacaoPagamento(PENDENTE);
+        return obterPedido(id);
+    }
+
+    @Override
+    public Pedido atualizarPedidoSePagamentoAprovado(Long id, StatusPagamentoEnum pagamentoEnum) {
+        if (pagamentoEnum.equals(StatusPagamentoEnum.R)) {
+            throw new BusinessException("Pagamento não efetuado.. foi recusado pela operadora!");
         }
 
+        Pedido pedido = obterPedido(id);
+
+        pedido.setSituacaoPagamento(PAGO);
+        pedido.setStatus(ANDAMENTO);
+        pedido.setDataHoraPagamento(LocalDateTime.now());
         return pedidoRepositoryPort.salvar(pedido);
     }
 

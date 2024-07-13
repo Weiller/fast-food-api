@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
 
-    @Query("SELECT p FROM PedidoEntity p JOIN FETCH p.itens WHERE p.status = :status")
-    List<PedidoEntity> findByStatus(StatusPedidoEnum status);
+    @Query("SELECT p FROM PedidoEntity p JOIN FETCH p.itens WHERE p.status in (:status) order by p.dataHoraCriacao desc")
+    List<PedidoEntity> findByStatus(List<StatusPedidoEnum> status);
 
 }

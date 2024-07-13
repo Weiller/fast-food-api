@@ -47,8 +47,8 @@ public class PedidoController {
             @ApiResponse(responseCode = "200", description = "Listar todos os pedidos", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = Pedido.class))})})
     @GetMapping
-    public List<PedidoDto> obterPedidosEmAndamento() {
-        return pedidoServicePort.obterPedidosEmAndamento()
+    public List<PedidoDto> obterPedidos() {
+        return pedidoServicePort.obterPedidos()
                 .stream()
                 .map(PedidoConverter::converterDomainToDto)
                 .toList();
@@ -78,6 +78,20 @@ public class PedidoController {
         return PedidoConverter.converterDomainToDto(pedido);
     }
 
+
+    @Operation(summary = "Endpoint para efetuar pedido e chamar a api externa para efetuar pagamento.. essa api externa enviará a informação para o webhook se o pagamento foi aprovado.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pedido efetuado com sucesso", content = {@Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Pedido.class))}),
+            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
+            @ApiResponse(responseCode = "412", description = "Pedido não efetuado!", content = @Content)})
+
+    @PutMapping("/{id}/efetuar")
+    public PedidoDto efetuarPedido(@PathVariable("id") Long id) {
+        Pedido pedido = pedidoServicePort.efetuarPedido(id);
+        return PedidoConverter.converterDomainToDto(pedido);
+    }
+
     @Operation(summary = "cancelar pedido")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Pedido cancelado com sucesso", content = {@Content(mediaType = "application/json",
@@ -88,19 +102,6 @@ public class PedidoController {
     @PutMapping("/{id}/cancelar")
     public PedidoDto cancelarPedido(@PathVariable("id") Long id) {
         Pedido pedido = pedidoServicePort.cancelarPedido(id);
-        return PedidoConverter.converterDomainToDto(pedido);
-    }
-
-    @Operation(summary = "realizar pagamento")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pagamento realizado com sucesso", content = {@Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Pedido.class))}),
-            @ApiResponse(responseCode = "400", description = "Parâmetros inválidos", content = @Content),
-            @ApiResponse(responseCode = "412", description = "Pagamento não efetuado!", content = @Content)})
-
-    @PutMapping("/{id}/pagamento")
-    public PedidoDto realizarPagamento(@PathVariable("id") Long id) {
-        Pedido pedido = pedidoServicePort.realizarPagamento(id);
         return PedidoConverter.converterDomainToDto(pedido);
     }
 
