@@ -1,12 +1,10 @@
 package br.com.fiap.infrastructure.controllers;
 
-import br.com.fiap.infrastructure.controllers.commands.RealizarPagamentoCommand;
-import br.com.fiap.infrastructure.controllers.converters.PedidoConverter;
-import br.com.fiap.infrastructure.controllers.presenters.PagamentoPresenter;
-import br.com.fiap.infrastructure.dtos.PagamentoDto;
-import br.com.fiap.infrastructure.dtos.PedidoDto;
 import br.com.fiap.core.entities.Pedido;
 import br.com.fiap.core.gateways.PedidoServiceGateway;
+import br.com.fiap.infrastructure.controllers.commands.RealizarPagamentoCommand;
+import br.com.fiap.infrastructure.controllers.presenters.PagamentoPresenter;
+import br.com.fiap.infrastructure.dtos.PagamentoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

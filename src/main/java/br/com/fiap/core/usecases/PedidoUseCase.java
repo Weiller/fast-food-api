@@ -3,6 +3,7 @@ package br.com.fiap.core.usecases;
 import br.com.fiap.core.entities.ItemPedido;
 import br.com.fiap.core.entities.Pedido;
 import br.com.fiap.core.entities.Produto;
+import br.com.fiap.core.enums.SituacaoPagamentoEnum;
 import br.com.fiap.core.enums.StatusPagamentoEnum;
 import br.com.fiap.core.enums.StatusPedidoEnum;
 import br.com.fiap.core.exceptions.BusinessException;
@@ -156,6 +157,10 @@ public class PedidoUseCase implements PedidoServiceGateway {
         }
 
         Pedido pedido = obterPedido(id);
+
+        if(pedido.getSituacaoPagamento().equals(PAGO)) {
+            throw new BusinessException("Pagamento do pedido já foi efetuado!");
+        }
 
         pedido.setSituacaoPagamento(PAGO);
         pedido.setStatus(ANDAMENTO);
