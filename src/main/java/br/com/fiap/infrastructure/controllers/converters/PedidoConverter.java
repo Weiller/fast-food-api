@@ -84,18 +84,4 @@ public class PedidoConverter {
                         .collect(Collectors.toList()))
                 .build();
     }
-
-    public static PedidoDto converterDomainToDto(Pedido pedido) {
-        return new PedidoDto(
-                pedido.getId(),
-                pedido.getClienteId(),
-                pedido.getValor(),
-                pedido.getSituacaoPagamento(),
-                pedido.getStatus(),
-                pedido.getDataHoraPagamento(),
-                pedido.getDataHoraCriacao(),
-                pedido.getDataHoraEntrega(),
-                pedido.getItens().stream().map(i -> new ItemPedidoDto(i.getId())).collect(Collectors.toList())
-        );
-    }
 }

@@ -2,6 +2,8 @@ package br.com.fiap.infrastructure.controllers;
 
 import br.com.fiap.infrastructure.controllers.commands.RealizarPagamentoCommand;
 import br.com.fiap.infrastructure.controllers.converters.PedidoConverter;
+import br.com.fiap.infrastructure.controllers.presenters.PagamentoPresenter;
+import br.com.fiap.infrastructure.dtos.PagamentoDto;
 import br.com.fiap.infrastructure.dtos.PedidoDto;
 import br.com.fiap.core.entities.Pedido;
 import br.com.fiap.core.gateways.PedidoServiceGateway;
@@ -33,8 +35,8 @@ public class PagamentoController {
             @ApiResponse(responseCode = "412", description = "Pagamento não efetuado!", content = @Content)})
 
     @PutMapping("/{id}")
-    public PedidoDto atualizarPedidoSePagamentoAprovado(@RequestBody RealizarPagamentoCommand command) {
+    public PagamentoDto atualizarPedidoSePagamentoAprovado(@RequestBody RealizarPagamentoCommand command) {
         Pedido pedido = pedidoServiceGateway.atualizarPedidoSePagamentoAprovado(command.getPedidoId(), command.getStatusPagamento());
-        return PedidoConverter.converterDomainToDto(pedido);
+        return PagamentoPresenter.converterPedidoToPagamentoDto(pedido);
     }
 }

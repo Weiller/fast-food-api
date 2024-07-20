@@ -34,13 +34,4 @@ public class ClienteConverter {
                 .build();
     }
 
-    public static ClienteDto converterClienteToDto(Cliente cliente) {
-        return ClienteDto.builder()
-                .id(cliente.id())
-                .nome(cliente.nome())
-                .cpf(cliente.cpf())
-                .email(cliente.email())
-                .build();
-    }
-
 }

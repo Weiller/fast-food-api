@@ -1,11 +1,12 @@
 package br.com.fiap.infrastructure.controllers;
 
+import br.com.fiap.core.dtos.ProdutoDto;
+import br.com.fiap.core.entities.Cliente;
+import br.com.fiap.core.gateways.ProdutoServiceGateway;
 import br.com.fiap.infrastructure.controllers.commands.AlterarProdutoCommand;
 import br.com.fiap.infrastructure.controllers.commands.CriarProdutoCommand;
 import br.com.fiap.infrastructure.controllers.converters.ProdutoConverter;
-import br.com.fiap.core.entities.Cliente;
-import br.com.fiap.core.dtos.ProdutoDto;
-import br.com.fiap.core.gateways.ProdutoServiceGateway;
+import br.com.fiap.infrastructure.controllers.presenters.ProdutoPresenter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -39,7 +40,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do produto", content = @Content)})
     @PostMapping
     public ProdutoDto salvar(@RequestBody CriarProdutoCommand command) {
-        return ProdutoConverter.converterProdutoToDto(produtoServiceGateway.salvar(ProdutoConverter.converterCommandToProduto(command))) ;
+        return ProdutoPresenter.converterProdutoToDto(produtoServiceGateway.salvar(ProdutoConverter.converterCommandToProduto(command)));
     }
 
     @Operation(summary = "Alterar um produto")
@@ -50,7 +51,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "412", description = "Erro de validação na alteração do produto", content = @Content)})
     @PutMapping
     public ProdutoDto alterar(@RequestBody AlterarProdutoCommand command) {
-        return ProdutoConverter.converterProdutoToDto(produtoServiceGateway.salvar(ProdutoConverter.converterAlterarCommandToProduto(command)));
+        return ProdutoPresenter.converterProdutoToDto(produtoServiceGateway.salvar(ProdutoConverter.converterAlterarCommandToProduto(command)));
     }
 
     @Operation(summary = "Excluir um produto pelo id")
@@ -61,7 +62,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "412", description = "Erro de negócio na exclusão.", content = @Content)})
     @DeleteMapping("/{id}")
     public ProdutoDto excluir(@PathVariable("id") Long id) {
-        return ProdutoConverter.converterProdutoToDto(produtoServiceGateway.excluir(id));
+        return ProdutoPresenter.converterProdutoToDto(produtoServiceGateway.excluir(id));
     }
 
     @Operation(summary = "Retornar uma lista de produtos pela categoria")

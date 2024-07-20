@@ -4,6 +4,7 @@ import br.com.fiap.infrastructure.controllers.commands.AdicionarItemCommand;
 import br.com.fiap.infrastructure.controllers.commands.CriarPedidoCommand;
 import br.com.fiap.infrastructure.controllers.commands.RemoverItemCommand;
 import br.com.fiap.infrastructure.controllers.converters.PedidoConverter;
+import br.com.fiap.infrastructure.controllers.presenters.PedidoPresenter;
 import br.com.fiap.infrastructure.dtos.PedidoDto;
 import br.com.fiap.core.entities.Pedido;
 import br.com.fiap.core.gateways.PedidoServiceGateway;
@@ -39,7 +40,7 @@ public class PedidoController {
     @PostMapping
     public PedidoDto salvar(@RequestBody CriarPedidoCommand command) {
         Pedido pedido = pedidoServiceGateway.salvar(PedidoConverter.converterCommandToPedido(command));
-        return PedidoConverter.converterDomainToDto(pedido);
+        return PedidoPresenter.converterDomainToDto(pedido);
     }
 
     @Operation(summary = "obter pedidos")
@@ -50,7 +51,7 @@ public class PedidoController {
     public List<PedidoDto> obterPedidos() {
         return pedidoServiceGateway.obterPedidos()
                 .stream()
-                .map(PedidoConverter::converterDomainToDto)
+                .map(PedidoPresenter::converterDomainToDto)
                 .toList();
     }
 
@@ -63,7 +64,7 @@ public class PedidoController {
     @PutMapping("/{pedidoId}/adicionar")
     public PedidoDto adicionarItem(@PathVariable("pedidoId") Long pedidoId, @RequestBody AdicionarItemCommand command) {
         Pedido pedido = pedidoServiceGateway.adicionarItem(PedidoConverter.converterAdicionarItemCommandToItemPedido(command, pedidoId));
-        return PedidoConverter.converterDomainToDto(pedido);
+        return PedidoPresenter.converterDomainToDto(pedido);
     }
 
     @Operation(summary = "Remover um item do pedido")
@@ -75,7 +76,7 @@ public class PedidoController {
     @DeleteMapping("/{pedidoId}/remover")
     public PedidoDto removerItem(@PathVariable("pedidoId") Long pedidoId, @RequestBody RemoverItemCommand command) {
         Pedido pedido = pedidoServiceGateway.removerItem(PedidoConverter.converterRemoverItemCommandToItemPedido(command, pedidoId));
-        return PedidoConverter.converterDomainToDto(pedido);
+        return PedidoPresenter.converterDomainToDto(pedido);
     }
 
 
@@ -90,7 +91,7 @@ public class PedidoController {
     @PutMapping("/{id}/checkout")
     public PedidoDto checkoutPedido(@PathVariable("id") Long id) {
         Pedido pedido = pedidoServiceGateway.checkoutPedido(id);
-        return PedidoConverter.converterDomainToDto(pedido);
+        return PedidoPresenter.converterDomainToDto(pedido);
     }
 
     @Operation(summary = "cancelar pedido")
@@ -103,7 +104,7 @@ public class PedidoController {
     @PutMapping("/{id}/cancelar")
     public PedidoDto cancelarPedido(@PathVariable("id") Long id) {
         Pedido pedido = pedidoServiceGateway.cancelarPedido(id);
-        return PedidoConverter.converterDomainToDto(pedido);
+        return PedidoPresenter.converterDomainToDto(pedido);
     }
 
     @Operation(summary = "efetuar entrega")
@@ -116,7 +117,7 @@ public class PedidoController {
     @PutMapping("/{id}/entrega")
     public PedidoDto efetuarEntrega(@PathVariable("id") Long id) {
         Pedido pedido = pedidoServiceGateway.efetuarEntrega(id);
-        return PedidoConverter.converterDomainToDto(pedido);
+        return PedidoPresenter.converterDomainToDto(pedido);
     }
 
     @Operation(summary = "atualizar pedido para pronto")
@@ -129,7 +130,7 @@ public class PedidoController {
     @PutMapping("/{id}/atualizar-pedido-pronto")
     public PedidoDto atualizarPedidoPronto(@PathVariable("id") Long id) {
         Pedido pedido = pedidoServiceGateway.atualizarPedidoPronto(id);
-        return PedidoConverter.converterDomainToDto(pedido);
+        return PedidoPresenter.converterDomainToDto(pedido);
     }
 
 }

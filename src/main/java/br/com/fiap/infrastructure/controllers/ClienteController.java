@@ -2,6 +2,7 @@ package br.com.fiap.infrastructure.controllers;
 
 import br.com.fiap.infrastructure.controllers.commands.CriarClienteCommand;
 import br.com.fiap.infrastructure.controllers.converters.ClienteConverter;
+import br.com.fiap.infrastructure.controllers.presenters.ClientePresenter;
 import br.com.fiap.infrastructure.dtos.ClienteDto;
 import br.com.fiap.core.entities.Cliente;
 import br.com.fiap.core.gateways.ClienteServiceGateway;
@@ -35,7 +36,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "412", description = "Cliente não encontrado", content = @Content) })
     @GetMapping("/{cpf}")
     public ClienteDto getClienteByCpf(@PathVariable("cpf") String cpf) {
-        return ClienteConverter.converterClienteToDto(clienteServiceGateway.getClienteByCpf(cpf));
+        return ClientePresenter.converterClienteToDto(clienteServiceGateway.getClienteByCpf(cpf));
     }
 
     @Operation(summary = "Salvar um novo cliente")
@@ -46,7 +47,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "412", description = "Erro de validação no cadastro do cliente", content = @Content) })
     @PostMapping
     public ClienteDto salvar(@RequestBody CriarClienteCommand command) {
-        return ClienteConverter.converterClienteToDto(clienteServiceGateway.salvar(ClienteConverter.converterCommandToCliente(command)));
+        return ClientePresenter.converterClienteToDto(clienteServiceGateway.salvar(ClienteConverter.converterCommandToCliente(command)));
     }
 
 }

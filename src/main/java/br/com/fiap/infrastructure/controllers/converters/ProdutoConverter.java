@@ -58,13 +58,4 @@ public class ProdutoConverter {
                 .build();
     }
 
-    public static ProdutoDto converterProdutoToDto(Produto produto) {
-        return new ProdutoDto.Builder()
-                .id(produto.getId())
-                .nome(produto.getNome())
-                .descricao(produto.getDescricao())
-                .valor(produto.getValor())
-                .categoria(produto.getCategoria().getDescricao())
-                .build();
-    }
 }
