@@ -1,0 +1,509 @@
+{
+	"info": {
+		"_postman_id": "36425899-3ba8-4957-9cfc-d14e5e2255b8",
+		"name": "fast-food-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cadastrar cliente",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\": \"weiller2\",\n\t\"email\": \"weillerschepis@gmail.com\",\n\t\"cpf\": \"99706638016\"\n}"
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/clientes",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"clientes"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "buscar clientes por cpf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\": \"weiller2\",\n\t\"email\": \"weillerschepis@gmail.com\",\n\t\"cpf\": \"99706638016\"\n}"
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/clientes/99706638016",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"clientes",
+						"99706638016"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "cadastrar produto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\": \"Hamburguer\",\n\t\"descricao\": \"Duas carnes e cebola\",\n\t\"valor\": \"39.90\",\n\t\"categoria\": \"L\"\n}"
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/produtos",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"produtos"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "alterar produto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 1,\n\t\"nome\": \"Hamburguer duplo\",\n\t\"descricao\": \"Duas carnes com cebola roxa\",\n\t\"valor\": \"41\",\n\t\"categoria\": \"L\"\n}"
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/produtos",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"produtos"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "excluir produto",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/produtos/1",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"produtos",
+						"1"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "buscar produtos por categoria",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/produtos/L",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"produtos",
+						"L"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "criar pedido",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"clienteId\": 1\n}"
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "listar pedidos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "adicionar item no pedido",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"produtoId\": 2,\n\t\"quantidade\": 2\n}"
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos/1/adicionar",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos",
+						"1",
+						"adicionar"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "remover item do pedido",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"produtoId\": 2,\n\t\"quantidade\": 1\n}"
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos/1/remover",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos",
+						"1",
+						"remover"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "checkout do pedido",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos/1/checkout",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos",
+						"1",
+						"checkout"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar status do pedido para pronto",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos/1/atualizar-pedido-pronto",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos",
+						"1",
+						"atualizar-pedido-pronto"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "atualizar status do pedido para entregue",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos/1/entrega",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos",
+						"1",
+						"entrega"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		},
+		{
+			"name": "cancelar pedido",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos/3/cancelar",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos",
+						"3",
+						"cancelar"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
+		}
+	]
+}
