@@ -1,6 +1,6 @@
 package br.com.fiap.infrastructure.controllers.presenters;
 
-import br.com.fiap.core.dtos.ProdutoDto;
+import br.com.fiap.infrastructure.dtos.ProdutoDto;
 import br.com.fiap.core.entities.Produto;
 
 public class ProdutoPresenter {

@@ -2,16 +2,15 @@ package br.com.fiap.infrastructure.repositories.cliente;
 
 import br.com.fiap.infrastructure.controllers.converters.ClienteConverter;
 import br.com.fiap.core.entities.Cliente;
-import br.com.fiap.core.gateways.ClienteRepositoryGateway;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClienteRepositoryGatewayAdapter implements ClienteRepositoryGateway {
+public class ClienteRepositoryGateway implements br.com.fiap.core.gateways.ClienteRepositoryGateway {
 
     private final ClienteRepository clienteRepository;
 
-    public ClienteRepositoryGatewayAdapter(ClienteRepository clienteRepository) {
+    public ClienteRepositoryGateway(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
     }
 

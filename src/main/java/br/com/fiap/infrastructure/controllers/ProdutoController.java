@@ -1,12 +1,12 @@
 package br.com.fiap.infrastructure.controllers;
 
-import br.com.fiap.core.dtos.ProdutoDto;
 import br.com.fiap.core.entities.Cliente;
 import br.com.fiap.core.gateways.ProdutoServiceGateway;
 import br.com.fiap.infrastructure.controllers.commands.AlterarProdutoCommand;
 import br.com.fiap.infrastructure.controllers.commands.CriarProdutoCommand;
 import br.com.fiap.infrastructure.controllers.converters.ProdutoConverter;
 import br.com.fiap.infrastructure.controllers.presenters.ProdutoPresenter;
+import br.com.fiap.infrastructure.dtos.ProdutoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -73,7 +73,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "412", description = "Categoria não encontrada", content = @Content)})
     @GetMapping("/{categoria}")
     public List<ProdutoDto> getProdutosPorCategoria(@PathVariable("categoria") String categoria) {
-        return produtoServiceGateway.getProdutosPorCategoria(categoria);
+        return ProdutoConverter.converterListaProdutoToProdutoDto(produtoServiceGateway.getProdutosPorCategoria(categoria));
     }
 
 }

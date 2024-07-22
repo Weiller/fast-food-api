@@ -9,21 +9,21 @@ import java.util.Objects;
 
 public class ClienteUseCase implements ClienteServiceGateway {
 
-    private final ClienteRepositoryGateway clienteServiceGateway;
+    private final ClienteRepositoryGateway clienteRepositoryGateway;
 
-    public ClienteUseCase(ClienteRepositoryGateway clienteServiceGateway) {
-        this.clienteServiceGateway = clienteServiceGateway;
+    public ClienteUseCase(ClienteRepositoryGateway clienteRepositoryGateway) {
+        this.clienteRepositoryGateway = clienteRepositoryGateway;
     }
 
     @Override
     public Cliente getClienteByCpf(String cpf) {
-        return clienteServiceGateway.getClienteByCpf(cpf).orElseThrow(() -> new BusinessException("Cliente não encontrado"));
+        return clienteRepositoryGateway.getClienteByCpf(cpf).orElseThrow(() -> new BusinessException("Cliente não encontrado"));
     }
 
     @Override
     public Cliente salvar(Cliente cliente) {
         preValidar(cliente);
-        return clienteServiceGateway.salvar(cliente);
+        return clienteRepositoryGateway.salvar(cliente);
     }
 
     private void preValidar(Cliente cliente) {
@@ -43,7 +43,7 @@ public class ClienteUseCase implements ClienteServiceGateway {
             throw new BusinessException("Cpf inválido");
         }
 
-        clienteServiceGateway.getClienteByCpf(cliente.cpf()).ifPresent(c -> {
+        clienteRepositoryGateway.getClienteByCpf(cliente.cpf()).ifPresent(c -> {
             throw new BusinessException("Cliente já cadastrado");
         });
     }

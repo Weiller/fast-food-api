@@ -2,10 +2,10 @@ package br.com.fiap.infrastructure.controllers.converters;
 
 import br.com.fiap.infrastructure.controllers.commands.AlterarProdutoCommand;
 import br.com.fiap.infrastructure.controllers.commands.CriarProdutoCommand;
+import br.com.fiap.infrastructure.dtos.ProdutoDto;
 import br.com.fiap.infrastructure.repositories.produto.ProdutoEntity;
 import br.com.fiap.core.entities.Produto;
 import br.com.fiap.core.enums.ProdutoCategoriaEnum;
-import br.com.fiap.core.dtos.ProdutoDto;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,6 +56,22 @@ public class ProdutoConverter {
                 .categoria(produto.getCategoria())
                 .dataInclusao(LocalDateTime.now())
                 .build();
+    }
+
+    public static ProdutoDto converterProdutoToProdutoDto(Produto produto) {
+        return new ProdutoDto.Builder()
+                .id(produto.getId())
+                .nome(produto.getNome())
+                .descricao(produto.getDescricao())
+                .valor(produto.getValor())
+                .categoria(produto.getCategoria().getDescricao())
+                .build();
+    }
+
+    public static List<ProdutoDto> converterListaProdutoToProdutoDto(List<Produto> produtos) {
+        return produtos.stream()
+                .map(ProdutoConverter::converterProdutoToProdutoDto)
+                .collect(Collectors.toList());
     }
 
 }

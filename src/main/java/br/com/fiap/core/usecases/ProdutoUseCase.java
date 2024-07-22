@@ -1,9 +1,7 @@
 package br.com.fiap.core.usecases;
 
-import br.com.fiap.core.converters.ProdutoConverter;
 import br.com.fiap.core.entities.Produto;
 import br.com.fiap.core.enums.ProdutoCategoriaEnum;
-import br.com.fiap.core.dtos.ProdutoDto;
 import br.com.fiap.core.exceptions.BusinessException;
 import br.com.fiap.core.gateways.ProdutoRepositoryGateway;
 import br.com.fiap.core.gateways.ProdutoServiceGateway;
@@ -69,7 +67,7 @@ public class ProdutoUseCase implements ProdutoServiceGateway {
     }
 
     @Override
-    public List<ProdutoDto> getProdutosPorCategoria(String categoria) {
+    public List<Produto> getProdutosPorCategoria(String categoria) {
         boolean categoriaValida = Stream.of(ProdutoCategoriaEnum.values())
                 .anyMatch(c -> c.name().equals(categoria.toUpperCase()));
 
@@ -82,7 +80,7 @@ public class ProdutoUseCase implements ProdutoServiceGateway {
             throw new BusinessException("Não foram encontrados produtos nessa categoria.");
         }
 
-        return ProdutoConverter.converterListaProdutoToProdutoDto(produtoList);
+        return produtoList;
     }
 
     @Override

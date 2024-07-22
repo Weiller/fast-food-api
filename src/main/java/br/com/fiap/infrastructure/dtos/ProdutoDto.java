@@ -1,4 +1,4 @@
-package br.com.fiap.core.dtos;
+package br.com.fiap.infrastructure.dtos;
 
 import java.math.BigDecimal;
 
