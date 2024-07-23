@@ -8,11 +8,11 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProdutoRepositoryGatewayAdapter implements ProdutoRepositoryGateway {
+public class ProdutoRepositoryGatewayImpl implements ProdutoRepositoryGateway {
 
     private final ProdutoRepository produtoRepository;
 
-    public ProdutoRepositoryGatewayAdapter(ProdutoRepository produtoRepository) {
+    public ProdutoRepositoryGatewayImpl(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
     }
 

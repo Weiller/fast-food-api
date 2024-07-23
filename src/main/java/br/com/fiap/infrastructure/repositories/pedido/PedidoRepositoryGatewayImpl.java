@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class PedidoRepositoryAdapter implements PedidoRepositoryGateway {
+public class PedidoRepositoryGatewayImpl implements PedidoRepositoryGateway {
 
     private final PedidoRepository pedidoRepository;
 
