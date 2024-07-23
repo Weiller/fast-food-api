@@ -13,8 +13,10 @@ As imagens utilizadas para a construção e execução da aplicação foram esco
 
 ### Execução
 O projeto inicialmente foi desenvolvido para ser executado em um cluster local como minikube ou similares.
-Na raiz do projeto acesso a pasta `/k8s` Execute os comandos na seguinte ordem
 
+Na raiz do projeto acesse a pasta `/k8s` 
+
+Execute os comandos na seguinte ordem
 ```bash
 kubectl apply -f metrics.yaml
 kubectl apply -f config-map-postgres.yaml
@@ -30,14 +32,16 @@ Aguarde até que o Probe de leitura esteja em `Ready` e acesse a aplicação atr
 
 Troque localhost pelo IP do seu cluster.
 
-É possível obter o IP do cluster através do comando 
+É possível obter o IP do cluster através do comando
+```bash
+kubectl cluster-info
+```
+
+[Documentação Swagger](http://localhost:30080/swagger-ui/index.html)
 
 Porta Aplicação: 30080
 
 Porta Banco de dados: 30000
-```bash
-kubectl cluster-info
-```
 
 ### Definição do docker compose
 
@@ -89,10 +93,9 @@ O sistema é composto por três controladores principais:
 - `ClienteController`: Responsável por lidar com as solicitações HTTP relacionadas ao Cliente.
 - `ProdutoController`: Responsável por lidar com as solicitações HTTP relacionadas ao Produto.
 - `PedidoController`: Responsável por lidar com as solicitações HTTP relacionadas ao Pedido.
+- `PagamentoController`: Responsável por lidar com as solicitações HTTP relacionadas ao Pagamento.
 
 Cada controlador tem vários métodos que correspondem a diferentes endpoints da API. Para mais detalhes sobre cada controlador e seus métodos, consulte a documentação do swagger.
-
-[Documentação Swagger](http://localhost:30080/swagger-ui/index.html)
 
 ## Desenho de arquitetura
 ![Desenho de arquitetura](fast-food-api.drawio.png)
