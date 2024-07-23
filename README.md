@@ -12,11 +12,31 @@ Este projeto é um sistema de pedidos, projetado para atender às necessidades d
 As imagens utilizadas para a construção e execução da aplicação foram escolhidas com base na compatibilidade com processadores AMD e ARM.
 
 ### Execução
-
-Para executar o projeto deve executar o comando 
+O projeto inicialmente foi desenvolvido para ser executado em um cluster local como minikube ou similares.
+Na raiz do projeto acesso a pasta `/k8s` Execute os comandos na seguinte ordem
 
 ```bash
-docker compose up
+kubectl apply -f metrics.yaml
+kubectl apply -f config-map-postgres.yaml
+kubectl apply -f svc-fast-food-banco.yaml
+kubectl apply -f svc-fast-food-api.yaml
+kubectl apply -f postgres-pv.yaml
+kubectl apply -f postgres-pvc.yaml
+kubectl apply -f pod-fast-food-banco.yaml
+kubectl apply -f pod-fast-food-api.yaml
+kubectl apply -f hpa-fast-food-api.yaml
+```
+Aguarde até que o Probe de leitura esteja em `Ready` e acesse a aplicação através do endereço `http://localhost:30080/swagger-ui/index.html`
+
+Troque localhost pelo IP do seu cluster.
+
+É possível obter o IP do cluster através do comando 
+
+Porta Aplicação: 30080
+
+Porta Banco de dados: 30000
+```bash
+kubectl cluster-info
 ```
 
 ### Definição do docker compose
@@ -72,4 +92,10 @@ O sistema é composto por três controladores principais:
 
 Cada controlador tem vários métodos que correspondem a diferentes endpoints da API. Para mais detalhes sobre cada controlador e seus métodos, consulte a documentação do swagger.
 
-[Documentação Swagger](http://localhost:8080/swagger-ui/index.html)
+[Documentação Swagger](http://localhost:30080/swagger-ui/index.html)
+
+## Desenho de arquitetura
+![Desenho de arquitetura](fast-food-api.drawio.png)
+
+## Desenho de infraestrutura
+![Desenho de infraestrutura](fast-food-api-k8s.drawio.png)
