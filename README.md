@@ -97,6 +97,8 @@ O sistema é composto por três controladores principais:
 
 Cada controlador tem vários métodos que correspondem a diferentes endpoints da API. Para mais detalhes sobre cada controlador e seus métodos, consulte a documentação do swagger.
 
+Para testar a aplicação importe o arquivo `fast-food-api.postman_collection.json` no Postman.
+
 ## Desenho de arquitetura
 ![Desenho de arquitetura](fast-food-api.drawio.png)
 
