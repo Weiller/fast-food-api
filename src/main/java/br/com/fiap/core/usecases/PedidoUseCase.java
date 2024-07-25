@@ -3,33 +3,18 @@ package br.com.fiap.core.usecases;
 import br.com.fiap.core.entities.ItemPedido;
 import br.com.fiap.core.entities.Pedido;
 import br.com.fiap.core.entities.Produto;
-import br.com.fiap.core.enums.SituacaoPagamentoEnum;
-import br.com.fiap.core.enums.StatusPagamentoEnum;
 import br.com.fiap.core.enums.StatusPedidoEnum;
 import br.com.fiap.core.exceptions.BusinessException;
-import br.com.fiap.core.gateways.NotificacaoSonoraGateway;
-import br.com.fiap.core.gateways.PagamentoServicoExternoGateway;
-import br.com.fiap.core.gateways.PedidoRepositoryGateway;
-import br.com.fiap.core.gateways.PedidoServiceGateway;
-import br.com.fiap.core.gateways.ProdutoRepositoryGateway;
+import br.com.fiap.core.gateways.*;
+import org.springframework.web.client.HttpClientErrorException;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import org.springframework.web.client.HttpClientErrorException;
-import static br.com.fiap.core.enums.SituacaoPagamentoEnum.PAGO;
+import java.util.*;
+
 import static br.com.fiap.core.enums.SituacaoPagamentoEnum.PENDENTE;
-import static br.com.fiap.core.enums.StatusPedidoEnum.ANDAMENTO;
-import static br.com.fiap.core.enums.StatusPedidoEnum.CANCELADO;
-import static br.com.fiap.core.enums.StatusPedidoEnum.ENTREGUE;
-import static br.com.fiap.core.enums.StatusPedidoEnum.INICIADO;
-import static br.com.fiap.core.enums.StatusPedidoEnum.PRONTO;
+import static br.com.fiap.core.enums.StatusPedidoEnum.*;
 import static java.util.Objects.isNull;
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 public class PedidoUseCase implements PedidoServiceGateway {
 
@@ -148,24 +133,6 @@ public class PedidoUseCase implements PedidoServiceGateway {
         }
 
         return obterPedido(id);
-    }
-
-    @Override
-    public Pedido atualizarPedidoSePagamentoAprovado(Long id, StatusPagamentoEnum pagamentoEnum) {
-        if (pagamentoEnum.equals(StatusPagamentoEnum.R)) {
-            throw new BusinessException("Pagamento não efetuado.. foi recusado pela operadora!");
-        }
-
-        Pedido pedido = obterPedido(id);
-
-        if(pedido.getSituacaoPagamento().equals(PAGO)) {
-            throw new BusinessException("Pagamento do pedido já foi efetuado!");
-        }
-
-        pedido.setSituacaoPagamento(PAGO);
-        pedido.setStatus(ANDAMENTO);
-        pedido.setDataHoraPagamento(LocalDateTime.now());
-        return pedidoRepositoryGateway.salvar(pedido);
     }
 
     @Override

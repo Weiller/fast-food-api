@@ -3,7 +3,6 @@ package br.com.fiap.core.gateways;
 import br.com.fiap.core.entities.ItemPedido;
 import br.com.fiap.core.entities.Pedido;
 
-import br.com.fiap.core.enums.StatusPagamentoEnum;
 import java.util.List;
 
 public interface PedidoServiceGateway {
@@ -18,8 +17,6 @@ public interface PedidoServiceGateway {
     Pedido cancelarPedido(Long id);
 
     Pedido checkoutPedido(Long id);
-
-    Pedido atualizarPedidoSePagamentoAprovado(Long id, StatusPagamentoEnum statusPagamento);
 
     Pedido efetuarEntrega(Long id);
 

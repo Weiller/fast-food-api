@@ -16,7 +16,6 @@ import java.util.Optional;
 public class PedidoRepositoryGatewayImpl implements PedidoRepositoryGateway {
 
     private final PedidoRepository pedidoRepository;
-
     private final PedidoConverter pedidoConverter;
 
     @Override
