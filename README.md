@@ -99,6 +99,9 @@ Cada controlador tem vários métodos que correspondem a diferentes endpoints da
 
 Para testar a aplicação importe o arquivo `fast-food-api.postman_collection.json` no Postman.
 
+## Vídeo de apresentação do projeto
+[Link para o vídeo](https://www.youtube.com/watch?v=mDb12TgbVA8)
+
 ## Desenho de arquitetura
 ![Desenho de arquitetura](fast-food-api.drawio.png)
 
