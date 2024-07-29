@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: backend-fast-food-api
-          image: weillerschepis/fiap:7
+          image: weillerschepis/fiap:8
           readinessProbe:
             failureThreshold: 3
             httpGet:

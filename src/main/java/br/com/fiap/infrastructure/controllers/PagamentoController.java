@@ -41,7 +41,7 @@ public class PagamentoController {
             @ApiResponse(responseCode = "412", description = "Status do pagamento não informado", content = @Content)})
 
     @GetMapping("/{id}/obter-status-pagamento")
-    public String obterStatusPagamento(Long idPedido){
-        return pagamentoServiceGateway.obterSituacaoPagamento(idPedido);
+    public String obterStatusPagamento(@PathVariable  Long id) {
+        return pagamentoServiceGateway.obterSituacaoPagamento(id);
     }
 }

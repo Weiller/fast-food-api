@@ -504,6 +504,42 @@
 				"description": "teste"
 			},
 			"response": []
+		},
+		{
+			"name": "verificar situação do pagamento",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://192.168.49.2:30080/api/pedidos/3/cancelar",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"49",
+						"2"
+					],
+					"port": "30080",
+					"path": [
+						"api",
+						"pedidos",
+						"3",
+						"cancelar"
+					]
+				},
+				"description": "teste"
+			},
+			"response": []
 		}
 	]
 }
