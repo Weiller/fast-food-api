@@ -1,0 +1,25 @@
+name: Deploy aplicacao
+
+on:
+   push:
+    branches: [main]
+
+jobs: 
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Configurando java
+              uses: actions/setup-java@v3
+              with:
+                distribution: "zulu"
+                java-version: "17"
+
+            - name: Fazendo build do projeto
+              run: mvn clean install && ls
+
+
+          
