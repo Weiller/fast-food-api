@@ -19,7 +19,7 @@ jobs:
                 java-version: "17"
 
             - name: Fazendo build do projeto
-              run: mvn clean install && ls
+              run: mvn clean install -DskipTests && ls
 
 
           

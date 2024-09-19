@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: ${PROFILE:default}
+    active: ${PROFILE:dev}
   application:
     name: fast-food-api
   datasource:

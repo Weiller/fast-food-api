@@ -1,24 +1,13 @@
 spring:
-  application:
-    name: fast-food-api
+  h2:
+    console:
+      enabled: true
   datasource:
-    url: jdbc:postgresql://${RDS_HOSTNAME}:${RDS_PORT}/fastfood?currentSchema=fastfood
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
-
+    url: jdbc:h2:mem:testdb
+    username: admin
+    password: admin
   jpa:
-    database: Postgresql
     show-sql: true
-    open-in-view: false
-    hibernate:
-      ddl-auto: create
-  flyway:
-    schemas: fastfood
-    url: jdbc:postgresql://${RDS_HOSTNAME}:${RDS_PORT}/fastfood?currentSchema=fastfood
-    user: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
-
-cors:
-  url: http://localhost:3000
-
-
+    properties:
+      hibernate:
+        format_sql: true
